@@ -71,17 +71,7 @@
                             </div>
                             <div class="content">
                                 <div class="form-group">
-                                    @if (ViewBag.Credit.Photo != null)
-                                    {
-                                        <img src="@Url.Content(ViewBag.Credit.Photo)" width="100%">
-                                    }
-                                    else
-                                    {
-                                        <img src="@Url.Content("~/Content/img/avatar.png")" width="100%">
-                                    }
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-info btn-fill btn-wd photo">Изменить фотографию</button>
-                                    </div>
+                                    @Html.Partial("EditPhoto")
                                 </div>
                             </div>
                         </div>
@@ -169,11 +159,21 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <a href="tel:+@ViewBag.Credit.PhoneNumber" class="btn btn-info btn-fill btn-wd bottom" onclick="">Позвонить</a>
+                                                <a href="tel:+@ViewBag.Credit.PhoneNumber" class="btn btn-info btn-fill btn-wd bottom" id="call">Позвонить</a>
                                             </div>
                                         </div>
                                     </div>
-
+                                    <script>
+                                        $(function () {
+                                            $("#call").click(function () {
+                                                document.getElementById('story').value = "Звонок клиенту";
+                                                document.getElementById('sendStory').submit();
+                                            });
+                                            $("#save").click(function () {
+                                                document.getElementById('btnform').click()
+                                            });
+                                        });
+                                    </script>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -199,7 +199,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill btn-wd mg" onclick="document.getElementById('btnform').click()">Сохранить</button>
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd mg" onclick="document.getElementById('btnform').click()" id="save">Сохранить</button>
                                 </div>
                                 <div class="clearfix"></div>
 

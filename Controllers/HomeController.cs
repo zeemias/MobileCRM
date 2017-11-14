@@ -105,8 +105,31 @@ namespace MobileCRM.Controllers
             return RedirectToAction( location, "Home");
         }
 
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            string fileName;
+            if (upload != null)
+            {
+                fileName = System.IO.Path.GetFileName(upload.FileName);
+                upload.SaveAs(Server.MapPath("~/Content/Clients/" + fileName));
+                fileName = "~/Content/Clients/" + fileName;
+            }
+            return RedirectToAction("Addcreditprofile");
+        }
+
+        public ActionResult EditPhoto()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditPhoto(HttpPostedFileBase upload)
         {
             string fileName;
             if (upload != null)

@@ -69,14 +69,11 @@
                         <div class="col-lg-3 col-md-4">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title"></h4>
+                                    <h4 class="title">Фото</h4>
                                 </div>
                                 <div class="content">
                                     <div class="form-group">
-                                        <img src="@Url.Content("~/Content/img/avatar.png")" width="100%">
-                                        <div class="text-center">
-                                            <button class="btn btn-info btn-fill btn-wd photo">Загрузить фотографию</button>
-                                        </div>
+                                        @Html.Partial("Upload")
                                     </div>
                                 </div>
                             </div>
