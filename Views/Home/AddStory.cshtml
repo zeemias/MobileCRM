@@ -1,0 +1,30 @@
+﻿<form method="post" action="/Home/AddStory">
+    <div class="col-md-8">
+        <div class="form-group">
+            <label>Комментарий</label>
+            <input type="text" name="Date" value="@DateTime.Now" hidden>
+            <input type="text" name="User" value="Галимарданов Фаузат" hidden>
+            <input type="text" class="form-control border-input" name="Action">
+            <input type="text" name="CreditId" value="@ViewBag.Credit.Id" hidden>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <button type="submit" class="btn btn-info btn-fill btn-wd bottom">Добавить</button>
+        </div>
+    </div>
+</form>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <div class="col-md-12">
+                <label>История взаимотношений</label>
+                <textarea rows="5" class="form-control border-input" disabled>
+                @foreach(var story in ViewBag.Stories)
+                {
+                    string st = story.Date + " - " + story.User + " - " + story.Action;
+                    @st
+                } 
+                </textarea>
+            </div>
+        </div>

@@ -1,0 +1,202 @@
+﻿@model MobileCRM.Models.ViewModel
+@{
+    ViewBag.Title = "ДельтаКредит - Кредитное дело";
+}
+
+<div class="sidebar-wrapper">
+    <div class="logo">
+        <a href="https://www.deltacredit.ru" class="simple-text">
+            <img src="@Url.Content("~/Content/img/logo.png")" width="90%">
+        </a>
+    </div>
+    <ul class="nav">
+        <li>
+            <a href="/Home/Addcreditprofile">
+                <i class="ti-plus"></i>
+                <p>Кредитное дело</p>
+            </a>
+        </li>
+        <li>
+            <a href="/Home/Creditlist">
+                <i class="ti-view-list-alt"></i>
+                <p>Кредитные дела</p>
+            </a>
+        </li>
+        <li class="active">
+            <a href="/Home/Creditprofile/1">
+                <i class="ti-user"></i>
+                <p>Карта клиента</p>
+            </a>
+        </li>
+    </ul>
+</div>
+    </div>
+
+<div class="main-panel">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar bar1"></span>
+                    <span class="icon-bar bar2"></span>
+                    <span class="icon-bar bar3"></span>
+                </button>
+                <a class="navbar-brand" href="#">Карта клиента</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#">
+                            <i class="ti-user"></i>
+                            <p>Выйти</p>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-md-4">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Фото</h4>
+                        </div>
+                        <div class="content">
+                            <div class="form-group">
+                                @if (ViewBag.Credit.Photo != null)
+                                {
+                                    <img src="@Url.Content(ViewBag.Credit.Photo)" width="100%">
+                                    <input name="Photo" value="@ViewBag.Credit.Photo" hidden />
+                                }
+                                else
+                                {
+                                    <img src="@Url.Content("~/Content/img/avatar.png")" width="100%">
+                                    <input name="Photo" value="~/Content/img/avatar.png" hidden/>
+                                }
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd photo">Изменить фотографию</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Комментарии</h4>
+                        </div>
+                        <div class="content">
+                            <div class="row">
+                                @Html.Partial("AddComment")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-6">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Кредитное дело</h4>
+                        </div>
+                        <div class="content">
+                            <form method="post" action="/Home/Creditprofile">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>ID Кредитного дела</label>
+                                            <input type="text" class="form-control border-input" value="@ViewBag.Credit.Id" name="Id" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Фамилия</label>
+                                            <input type="text" class="form-control border-input" value="@ViewBag.Credit.Surname" name="Surname">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Имя</label>
+                                            <input type="text" class="form-control border-input" value="@ViewBag.Credit.Name" name="Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label>Отчество</label>
+                                            <input type="text" class="form-control border-input" value="@ViewBag.Credit.Patronymic" name="Patronymic">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Дата рождения</label>
+                                            <input type="date" class="form-control border-input" value="@ViewBag.Credit.Birthday.ToString("d")" name="Birthday">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <label>Почта</label>
+                                            <input type="email" class="form-control border-input" value="@ViewBag.Credit.Email" name="Email">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label>Телефон</label>
+                                            <input type="tel" class="form-control border-input" value="@ViewBag.Credit.PhoneNumber" name="PhoneNumber">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <a href="tel:+@ViewBag.Credit.PhoneNumber" class="btn btn-info btn-fill btn-wd bottom">Позвонить</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Источник обращения</label>
+                                            <input type="text" class="form-control border-input" value="@ViewBag.Credit.Source" name="Source">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Место работы</label>
+                                            <input type="text" class="form-control border-input" value="@ViewBag.Credit.Work" name="Work">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" id="btnform" name="btnform" hidden></button>
+                            </form>
+
+                                <div class="row">
+                                    @Html.Partial("AddStory")
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd save" onclick="document.getElementById('btnform').click()">Сохранить</button>
+                                </div>
+                                <div class="clearfix"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
