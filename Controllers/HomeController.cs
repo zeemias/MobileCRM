@@ -36,8 +36,6 @@ namespace MobileCRM.Controllers
             string profile = "Creditprofile/" + id.ToString();
             db.Stories.Add(new Story { Date = DateTime.Now, User = "Галимарданов Фаузат", Action = "Добавлен новый клиент", CreditId = id });
             db.SaveChanges();
-            // сообщение о создании дела
-
             return RedirectToAction(profile, "Home");
         }
 

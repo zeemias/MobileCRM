@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "ДельтаКредит - Регистрация нового пользователя";
+}
+
+
+@{
+    ViewBag.Title = "ДельтаКредит - Вход в личный кабинет";
+}
+
+<div class="wrapper bg">
+    <div class="card reg-center" data-active-color="danger">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a href="https://www.deltacredit.ru" class="simple-text">
+                        <img src="@Url.Content("~/Content/img/logo.png")" width="100%">
+                    </a>
+                </div>
+            </div>
+            <div class="text-center">
+                <h3>Регистрация</h3>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" class="form-control border-input" name="Login">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Фамилия</label>
+                    <input type="text" class="form-control border-input" name="Surname">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" class="form-control border-input" name="Name">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Отчество</label>
+                    <input type="text" class="form-control border-input" name="Patronymic">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" class="form-control border-input" name="Password">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Подтверждение пароля</label>
+                    <input type="password" class="form-control border-input" name="ConfirmPassword">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-info btn-fill btn-wd save">Создать аккаунт</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div class="text-center">
+                        <a href="Login">Войти в аккаунт</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
