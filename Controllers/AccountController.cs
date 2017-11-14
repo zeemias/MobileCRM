@@ -34,7 +34,7 @@ namespace MobileCRM.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
+                    ModelState.AddModelError("", "Неправильный логин или пароль");
                 }
             }
 
@@ -79,6 +79,15 @@ namespace MobileCRM.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult Logoff()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.SignOut();
+            }
+            return RedirectToAction("Login", "Account");
         }
     }
 }

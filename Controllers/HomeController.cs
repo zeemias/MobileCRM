@@ -20,13 +20,11 @@ namespace MobileCRM.Controllers
 
         public ActionResult Addcreditprofile()
         {
-         /* if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 return View();
             }
-            return RedirectToAction("Login", "Account"); */
-
-            return View();
+            return RedirectToAction("Login", "Account"); 
         }
 
         [HttpPost]
@@ -41,47 +39,32 @@ namespace MobileCRM.Controllers
 
         public ActionResult Creditlist()
         {
-         /* if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 return View(db.Credits.ToList());
             }
-            return RedirectToAction("Login", "Account");*/
-
-            return View(db.Credits.ToList());
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Creditprofile(int? id)
         {
-        /*  if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 if (id == null)
                 {
                     return HttpNotFound();
                 }
                 Credit credit = db.Credits.Find(id);
-                //должен находить истории и комментарии привязанные к делу 
+                ViewBag.Credit = credit;
+                ViewBag.Comments = db.Comments.Where(t => t.CreditId == id).ToList();
+                ViewBag.Stories = db.Stories.Where(t => t.CreditId == id).ToList();
                 if (credit != null)
                 {
-                    //ViewBag.Stories = ;
-                    //ViewBag.Comments = ;
-                    return View(credit);
+                   return View();
                 }
-            }
-            return RedirectToAction("Login", "Account"); */
-
-            if (id == null)
-            {
                 return HttpNotFound();
             }
-            Credit credit = db.Credits.Find(id);
-            ViewBag.Credit = credit;
-            ViewBag.Comments = db.Comments.Where(t => t.CreditId == id).ToList();
-            ViewBag.Stories = db.Stories.Where(t => t.CreditId == id).ToList();
-            if (credit != null)
-            {
-                return View();
-            }
-            return HttpNotFound();
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
@@ -89,17 +72,9 @@ namespace MobileCRM.Controllers
         {
             db.Entry(credit).State = EntityState.Modified;
             db.SaveChanges();
+            string location = "Creditprofile/" + credit.Id;
             //сообщение о сохранении 
-            return View();
-        }
-
-        public ActionResult Logoff()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                FormsAuthentication.SignOut();
-            }
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction( location, "Home");
         }
 
         public ActionResult AddStory()
@@ -128,6 +103,19 @@ namespace MobileCRM.Controllers
             db.SaveChanges();
             string location = "Creditprofile/" + comment.CreditId.ToString();
             return RedirectToAction( location, "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            string fileName;
+            if (upload != null)
+            {
+                fileName = System.IO.Path.GetFileName(upload.FileName);
+                upload.SaveAs(Server.MapPath("~/Content/Clients/" + fileName));
+                fileName = "~/Content/Clients/" + fileName;
+            }
+            return RedirectToAction("Addcreditprofile");
         }
     }
 }
