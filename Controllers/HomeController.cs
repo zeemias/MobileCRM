@@ -31,6 +31,10 @@ namespace MobileCRM.Controllers
         [HttpPost]
         public ActionResult Addcreditprofile(Credit credit)
         {
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("Upload");
+            }
             int id = db.Credits.Add(credit).Id;
             string profile = "Creditprofile/" + id.ToString();
             db.Stories.Add(new Story { Date = DateTime.Now, User = "Галимарданов Фаузат", Action = "Добавлен новый клиент", CreditId = id });
@@ -150,17 +154,23 @@ namespace MobileCRM.Controllers
         {
             return View();
         }
+
+        public ActionResult AddProfile()
+        {
+            return View();
+        }
+
         public ActionResult EditProfile()
         {
             return View();
         }
 
-        public ActionResult Upload()
+        public ActionResult EditPhoto()
         {
             return View();
         }
 
-        public ActionResult EditPhoto()
+        public ActionResult Upload()
         {
             return View();
         }

@@ -1,7 +1,9 @@
 ﻿<img src="@Url.Content("~/Content/img/avatar.png")" width="100%">
-<form method="post" action="/Home/Upload" enctype="multipart/form-data">
+@using (Ajax.BeginForm("Addcreditprofile", "Home", new { enctype = "multipart/form-data" }, new AjaxOptions { UpdateTargetId = "photo" }))
+{
     <div class="text-center">
+        <input type="file" name="upload" />
         <button type="submit" class="btn btn-info btn-fill btn-wd photo" onclick="">Загрузить фотографию</button>
     </div>
-</form>
+}
 

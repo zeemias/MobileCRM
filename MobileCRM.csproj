@@ -242,6 +242,7 @@
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Home\EditPhoto.cshtml" />
     <Content Include="Views\Home\EditProfile.cshtml" />
+    <Content Include="Views\Home\AddProfile.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
