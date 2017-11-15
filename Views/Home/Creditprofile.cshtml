@@ -49,7 +49,7 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="Account/Logoff">
+                            <a href="/Account/Logoff">
                                 <i class="ti-user"></i>
                                 <p>Выйти</p>
                             </a>
@@ -79,10 +79,8 @@
                             <div class="header">
                                 <h4 class="title">Комментарии</h4>
                             </div>
-                            <div class="content">
-                                <div class="row">
-                                    @Html.Partial("AddComment")
-                                </div>
+                            <div class="content" id="comments">
+                                @Html.Partial("AddComment")
                             </div>
                         </div>
                     </div>
@@ -194,7 +192,7 @@
                                     <button type="submit" id="btnform" name="btnform" hidden></button>
                                 </form>
 
-                                <div class="row">
+                                <div id="stories">
                                     @Html.Partial("AddStory")
                                 </div>
 

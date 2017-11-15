@@ -67,7 +67,7 @@ namespace MobileCRM.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult Creditprofile(Credit credit)
         {
             db.Entry(credit).State = EntityState.Modified;
@@ -75,6 +75,52 @@ namespace MobileCRM.Controllers
             string location = "Creditprofile/" + credit.Id;
             //сообщение о сохранении 
             return RedirectToAction( location, "Home");
+        }*/
+
+        [HttpPost]
+        public ActionResult Creditprofile()
+        {
+            if (Request.IsAjaxRequest())
+            {
+                int id = Convert.ToInt32(Request["CreditId"]);
+                switch (Request["Type"])
+                {
+                    case "comment":
+                        Comment comment = new Comment()
+                        {
+                            CreditId = id,
+                            Date = DateTime.Now,
+                            User = "Галимарданов Фаузат",
+                            UserComment = Request["UserComment"]
+                        };
+                        db.Comments.Add(comment);
+                        db.SaveChanges();
+                        ViewBag.Credit = db.Credits.Find(id);
+                        ViewBag.Comments = db.Comments.Where(t => t.CreditId == id).ToList();
+                        return PartialView("AddComment");
+                    case "story":
+                        Story story = new Story()
+                        {
+                            CreditId = id,
+                            Date = DateTime.Now,
+                            User = "Галимарданов Фаузат",
+                            Action = Request["Action"]
+                        };
+                        db.Stories.Add(story);
+                        db.SaveChanges();
+                        ViewBag.Credit = db.Credits.Find(id);
+                        ViewBag.Stories = db.Stories.Where(t => t.CreditId == id).ToList();
+                        return PartialView("AddStory");
+                    case "save":
+                        break;
+                    case "photo":
+                        break;
+                    default:
+                        return HttpNotFound();
+                }
+            }
+       
+            return View();
         }
 
         public ActionResult AddStory()
@@ -82,27 +128,9 @@ namespace MobileCRM.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult AddStory(Story story)
-        {
-            db.Stories.Add(story);
-            db.SaveChanges();
-            string location = "Creditprofile/" + story.CreditId.ToString();
-            return RedirectToAction( location, "Home");
-        }
-
         public ActionResult AddComment()
         {
             return View();
-        }
-
-        [HttpPost]
-        public ActionResult AddComment(Comment comment)
-        {
-            db.Comments.Add(comment);
-            db.SaveChanges();
-            string location = "Creditprofile/" + comment.CreditId.ToString();
-            return RedirectToAction( location, "Home");
         }
 
         public ActionResult Upload()
@@ -140,5 +168,22 @@ namespace MobileCRM.Controllers
             }
             return RedirectToAction("Addcreditprofile");
         }
+
+        public ActionResult AjaxTest()
+        {
+            if (Request.IsAjaxRequest())
+            {
+                ViewData["data"] = Request["data"];
+                return PartialView("AjaxTestPartial");
+            }
+
+            return View();
+        }
+
+        public ActionResult AjaxTestPartial()
+        {
+            return View();
+        }
+
     }
 }

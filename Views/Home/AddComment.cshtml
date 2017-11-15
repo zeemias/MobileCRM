@@ -1,16 +1,17 @@
-﻿<form method="post" action="/Home/AddComment">
-    <div class="col-xs-10">
-        <label>Комментарий</label>
-        <input type="text" name="Date" value="@DateTime.Now" hidden>
-        <input type="text" name="User" value="Галимарданов Фаузат" hidden>
-        <input type="text" class="form-control border-input" name="UserComment">
-        <input type="text" name="CreditId" value="@ViewBag.Credit.Id" hidden>
-    </div>
-    <div class="col-xs-2">
-        <button class="btn btn-info btn-fill btn-icon send" type="submit"><i class="fa fa-envelope"></i></button>
-    </div>
-</form>
-<div class="col-xs-12">
+﻿<div class="row">
+   @using (Ajax.BeginForm("Creditprofile", "Home", new AjaxOptions { UpdateTargetId = "comments" }))
+    {
+                <div class="col-xs-10">
+                    <label>Комментарий</label>
+                    <input type="text" name="Type" value="comment" hidden>
+                    <input type="text" class="form-control border-input" name="UserComment" required>
+                    <input type="text" name="CreditId" value="@ViewBag.Credit.Id" hidden>
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-info btn-fill btn-icon send" type="submit"><i class="fa fa-envelope"></i></button>
+                </div>
+    }
+    <div class="col-xs-12" id="commentStory">
     <label>История комментариев</label>
     <textarea rows="5" class="form-control border-input" disabled>
     @foreach (var comment in ViewBag.Comments)
@@ -19,4 +20,5 @@
         @cm
     }
     </textarea>
+  </div>
 </div>

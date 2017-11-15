@@ -1,20 +1,21 @@
-﻿<form method="post" action="/Home/AddStory" id="sendStory">
-    <div class="col-md-8">
-        <div class="form-group">
-            <label>Добавить в историю</label>
-            <input type="text" name="Date" value="@DateTime.Now" hidden>
-            <input type="text" name="User" value="Галимарданов Фаузат" hidden>
-            <input type="text" class="form-control border-input" name="Action" id="story">
-            <input type="text" name="CreditId" value="@ViewBag.Credit.Id" hidden>
+﻿<div class="row">
+    @using (Ajax.BeginForm("Creditprofile", "Home", new AjaxOptions { UpdateTargetId = "stories" }))
+    {
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Добавить в историю</label>
+                <input type="text" name="Type" value="story" hidden>
+                <input type="text" class="form-control border-input" name="Action" id="story" required>
+                <input type="text" name="CreditId" value="@ViewBag.Credit.Id" hidden>
+            </div>
         </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <button type="submit" class="btn btn-info btn-fill btn-wd bottom">Добавить</button>
+        <div class="col-md-4">
+            <div class="form-group">
+                <button type="submit" class="btn btn-info btn-fill btn-wd bottom">Добавить</button>
+            </div>
         </div>
-    </div>
-</form>
-    </div>
+    }
+</div>
     <div class="row">
         <div class="form-group">
             <div class="col-md-12">
@@ -28,3 +29,4 @@
                 </textarea>
             </div>
         </div>
+    </div>
