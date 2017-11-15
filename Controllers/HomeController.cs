@@ -29,10 +29,19 @@ namespace MobileCRM.Controllers
         }
 
         [HttpPost]
-        public ActionResult Addcreditprofile(Credit credit)
+        public ActionResult Addcreditprofile(string photo)
         {
             if (Request.IsAjaxRequest())
             {
+                HttpPostedFileBase upload = Request.Files["upload"];
+                string fileName;
+                if (upload != null && upload.ContentLength > 0 && !string.IsNullOrEmpty(upload.FileName))
+                {
+                    fileName = upload.FileName; ;
+                    upload.SaveAs(Server.MapPath("~/Content/Clients/" + fileName));
+                    fileName = "~/Content/Clients/" + fileName;
+                    ViewBag.Photo = fileName;
+                }
                 return PartialView("Upload");
             }
             return View();
@@ -75,6 +84,7 @@ namespace MobileCRM.Controllers
             {
                 int idAdd = Convert.ToInt32(Request["CreditId"]);
                 int idEdit = Convert.ToInt32(Request["Id"]);
+                throw new Exception("123");
                 switch (Request["Type"])
                 {
                     case "comment":
@@ -178,7 +188,7 @@ namespace MobileCRM.Controllers
                 upload.SaveAs(Server.MapPath("~/Content/Clients/" + fileName));
                 fileName = "~/Content/Clients/" + fileName;
             }
-            return RedirectToAction("Addcreditprofile");
+            return View();
         }
 
         [HttpPost]

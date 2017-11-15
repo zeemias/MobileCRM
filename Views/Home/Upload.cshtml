@@ -1,4 +1,9 @@
-﻿<img src="@Url.Content("~/Content/img/avatar.png")" width="100%">
+﻿<img src="
+     @if (ViewBag.Photo != null) {
+        @Url.Content(ViewBag.Photo)
+     } else {
+        @Url.Content("~/Content/img/avatar.png")
+     }" width="100%">
 @using (Ajax.BeginForm("Addcreditprofile", "Home", new { enctype = "multipart/form-data" }, new AjaxOptions { UpdateTargetId = "photo" }))
 {
     <div class="text-center">
