@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using MobileCRM.Models;
 using System.Data.Entity;
+using System.Globalization;
 
 namespace MobileCRM.Controllers
 {
@@ -82,37 +83,54 @@ namespace MobileCRM.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                int id = Convert.ToInt32(Request["CreditId"]);
+                int idAdd = Convert.ToInt32(Request["CreditId"]);
+                int idEdit = Convert.ToInt32(Request["Id"]);
                 switch (Request["Type"])
                 {
                     case "comment":
                         Comment comment = new Comment()
                         {
-                            CreditId = id,
+                            CreditId = idAdd,
                             Date = DateTime.Now,
                             User = "Галимарданов Фаузат",
                             UserComment = Request["UserComment"]
                         };
                         db.Comments.Add(comment);
                         db.SaveChanges();
-                        ViewBag.Credit = db.Credits.Find(id);
-                        ViewBag.Comments = db.Comments.Where(t => t.CreditId == id).ToList();
+                        ViewBag.Credit = db.Credits.Find(idAdd);
+                        ViewBag.Comments = db.Comments.Where(t => t.CreditId == idAdd).ToList();
                         return PartialView("AddComment");
                     case "story":
                         Story story = new Story()
                         {
-                            CreditId = id,
+                            CreditId = idAdd,
                             Date = DateTime.Now,
                             User = "Галимарданов Фаузат",
                             Action = Request["Action"]
                         };
                         db.Stories.Add(story);
                         db.SaveChanges();
-                        ViewBag.Credit = db.Credits.Find(id);
-                        ViewBag.Stories = db.Stories.Where(t => t.CreditId == id).ToList();
+                        ViewBag.Credit = db.Credits.Find(idAdd);
+                        ViewBag.Stories = db.Stories.Where(t => t.CreditId == idAdd).ToList();
                         return PartialView("AddStory");
-                    case "save":
-                        break;
+                    case "profile":
+                        Credit credit = new Credit()
+                        {
+                            Id = idEdit,
+                            Name = Request["Name"],
+                            Surname = Request["Surname"],
+                            Patronymic = Request["Patronymic"],
+                            Photo = Request["Photo"],
+                            Email = Request["Email"],
+                            Source = Request["Source"],
+                            Work = Request["Work"],
+                            PhoneNumber = Convert.ToInt64(Request["PhoneNumber"]),
+                            Birthday = Convert.ToDateTime(Request["Birthday"])
+                        };
+                        db.Entry(credit).State = EntityState.Modified;
+                        db.SaveChanges();
+                        ViewBag.Credit = db.Credits.Find(idEdit);
+                        return PartialView("EditProfile");
                     case "photo":
                         break;
                     default:
@@ -132,8 +150,17 @@ namespace MobileCRM.Controllers
         {
             return View();
         }
+        public ActionResult EditProfile()
+        {
+            return View();
+        }
 
         public ActionResult Upload()
+        {
+            return View();
+        }
+
+        public ActionResult EditPhoto()
         {
             return View();
         }
@@ -151,11 +178,6 @@ namespace MobileCRM.Controllers
             return RedirectToAction("Addcreditprofile");
         }
 
-        public ActionResult EditPhoto()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ActionResult EditPhoto(HttpPostedFileBase upload)
         {
@@ -167,22 +189,6 @@ namespace MobileCRM.Controllers
                 fileName = "~/Content/Clients/" + fileName;
             }
             return RedirectToAction("Addcreditprofile");
-        }
-
-        public ActionResult AjaxTest()
-        {
-            if (Request.IsAjaxRequest())
-            {
-                ViewData["data"] = Request["data"];
-                return PartialView("AjaxTestPartial");
-            }
-
-            return View();
-        }
-
-        public ActionResult AjaxTestPartial()
-        {
-            return View();
         }
 
     }

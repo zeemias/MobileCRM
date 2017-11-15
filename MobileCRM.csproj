@@ -241,8 +241,7 @@
     <Content Include="Views\Account\Logoff.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Home\EditPhoto.cshtml" />
-    <Content Include="Views\Home\AjaxTestPartial.cshtml" />
-    <Content Include="Views\Home\AjaxTest.cshtml" />
+    <Content Include="Views\Home\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -1,0 +1,84 @@
+﻿@using (Ajax.BeginForm("Creditprofile", "Home", new AjaxOptions { UpdateTargetId = "profiles" }))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>ID Кредитного дела</label>
+                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Id" disabled>
+                <input type="hidden" value="@ViewBag.Credit.Id" name="Id">
+                <input type="text" name="Type" value="profile" hidden>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Фамилия</label>
+                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Surname" name="Surname">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Имя</label>
+                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Name" name="Name">
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="form-group">
+                <label>Отчество</label>
+                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Patronymic" name="Patronymic">
+            </div>
+        </div>
+    </div>
+    <input type="text" name="Photo" value="@ViewBag.Credit.Photo" hidden />
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label>Дата рождения</label>
+                <input type="date" class="form-control border-input" value="@ViewBag.Credit.Birthday.ToString("d")" name="Birthday">
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="form-group">
+                <label>Почта</label>
+                <input type="email" class="form-control border-input" value="@ViewBag.Credit.Email" name="Email">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>Телефон</label>
+                <input type="tel" class="form-control border-input" value="@ViewBag.Credit.PhoneNumber" name="PhoneNumber">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <a href="tel:+@ViewBag.Credit.PhoneNumber" class="btn btn-info btn-fill btn-wd bottom" id="call">Позвонить</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Источник обращения</label>
+                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Source" name="Source">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Место работы</label>
+                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Work" name="Work">
+            </div>
+        </div>
+    </div>
+    <button type="submit" id="btnform" name="btnform" hidden></button>
+}
+
