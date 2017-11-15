@@ -35,11 +35,7 @@ namespace MobileCRM.Controllers
             {
                 return PartialView("Upload");
             }
-            int id = db.Credits.Add(credit).Id;
-            string profile = "Creditprofile/" + id.ToString();
-            db.Stories.Add(new Story { Date = DateTime.Now, User = "Галимарданов Фаузат", Action = "Добавлен новый клиент", CreditId = id });
-            db.SaveChanges();
-            return RedirectToAction(profile, "Home");
+            return View();
         }
 
         public ActionResult Creditlist()
@@ -71,16 +67,6 @@ namespace MobileCRM.Controllers
             }
             return RedirectToAction("Login", "Account");
         }
-
-        /*[HttpPost]
-        public ActionResult Creditprofile(Credit credit)
-        {
-            db.Entry(credit).State = EntityState.Modified;
-            db.SaveChanges();
-            string location = "Creditprofile/" + credit.Id;
-            //сообщение о сохранении 
-            return RedirectToAction( location, "Home");
-        }*/
 
         [HttpPost]
         public ActionResult Creditprofile()
@@ -155,9 +141,15 @@ namespace MobileCRM.Controllers
             return View();
         }
 
-        public ActionResult AddProfile()
+        public ActionResult AddProfile(Credit credit)
         {
-            return View();
+            db.Credits.Add(credit);
+            db.SaveChanges();
+            int id = credit.Id;
+            db.Stories.Add(new Story { Date = DateTime.Now, User = "Галимарданов Фаузат", Action = "Добавлен новый клиент", CreditId = id });
+            db.SaveChanges();
+            string profile = "Creditprofile/" + id.ToString();
+            return RedirectToAction(profile, "Home");
         }
 
         public ActionResult EditProfile()
@@ -174,6 +166,7 @@ namespace MobileCRM.Controllers
         {
             return View();
         }
+        
 
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase upload)
