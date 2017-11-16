@@ -71,7 +71,11 @@
                             </div>
                             <div class="content">
                                 <div class="form-group">
-                                    @Html.Partial("EditPhoto")
+                                    <img src="@Url.Content(ViewBag.Credit.Photo)" width="100%" id="photo">
+                                    <div class="text-center">
+                                        <input type="file" name="upload" id="uploadFile" />
+                                        <button id="submit" class="btn btn-info btn-fill btn-wd photo">Загрузить</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +103,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill btn-wd mg" onclick="document.getElementById('btnform').click()" id="save">Сохранить</button>
+                                    <button type="submit" class="btn btn-info btn-fill btn-wd mg" id="save">Сохранить</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>

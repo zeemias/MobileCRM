@@ -31,20 +31,19 @@
     <script src="@Url.Content("~/Content/js/paper-dashboard.js")"></script>
     <script src="@Url.Content("~/Content/js/demo.js")"></script>
     <script type="text/javascript">
+        $('#submit').on('click', function (e) {
+            e.preventDefault();
+            var files = document.getElementById('uploadFile').files;
+            if (files.length > 0) {
+                if (window.FormData !== undefined) {
+                    var data = new FormData();
+                    for (var x = 0; x < files.length; x++) {
+                        data.append("file" + x, files[x]);
+                    }
 
-    $('#submit').on('click', function (e) {
-        e.preventDefault();
-        var files = document.getElementById('uploadFile').files;
-        if (files.length > 0) {
-            if (window.FormData !== undefined) {
-                var data = new FormData();
-                for (var x = 0; x < files.length; x++) {
-                    data.append("file" + x, files[x]);
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("UploadPhoto", "Home")',
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("UploadPhoto", "Home")',
                     contentType: false,
                     processData: false,
                     data: data,
@@ -61,7 +60,15 @@
                 alert("Браузер не поддерживает загрузку файлов HTML5!");
             }
         }
-    });
+        });
+
+        $('#save').on('click', function (e) { $('#btnform').click() });
+
+        $('#call').on('click', function (e) {
+            $('#story').val("Звонок клиенту");
+            $('#AddStoryForm').submit();
+            $('#story').val();
+        });
     </script>
 }
 </html>

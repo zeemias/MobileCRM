@@ -125,8 +125,6 @@ namespace MobileCRM.Controllers
                         db.SaveChanges();
                         ViewBag.Credit = db.Credits.Find(idEdit);
                         return PartialView("EditProfile");
-                    case "photo":
-                        break;
                     default:
                         return HttpNotFound();
                 }
@@ -159,43 +157,6 @@ namespace MobileCRM.Controllers
         public ActionResult EditProfile()
         {
             return View();
-        }
-
-        public ActionResult EditPhoto()
-        {
-            return View();
-        }
-
-        public ActionResult Upload()
-        {
-            return View();
-        }
-        
-
-        [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase upload)
-        {
-            string fileName;
-            if (upload != null)
-            {
-                fileName = System.IO.Path.GetFileName(upload.FileName);
-                upload.SaveAs(Server.MapPath("~/Content/Clients/" + fileName));
-                fileName = "~/Content/Clients/" + fileName;
-            }
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult EditPhoto(HttpPostedFileBase upload)
-        {
-            string fileName;
-            if (upload != null)
-            {
-                fileName = System.IO.Path.GetFileName(upload.FileName);
-                upload.SaveAs(Server.MapPath("~/Content/Clients/" + fileName));
-                fileName = "~/Content/Clients/" + fileName;
-            }
-            return RedirectToAction("Addcreditprofile");
         }
 
         public JsonResult UploadPhoto()
