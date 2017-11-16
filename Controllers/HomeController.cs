@@ -7,12 +7,14 @@ using System.Web.Security;
 using MobileCRM.Models;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
 
 namespace MobileCRM.Controllers
 {
     public class HomeController : Controller
     {
         CreditContext db = new CreditContext();
+        public string photoPath;
 
         public ActionResult Index()
         {
@@ -29,22 +31,15 @@ namespace MobileCRM.Controllers
         }
 
         [HttpPost]
-        public ActionResult Addcreditprofile(string photo)
+        public ActionResult Addcreditprofile(Credit credit)
         {
-            if (Request.IsAjaxRequest())
-            {
-                HttpPostedFileBase upload = Request.Files["upload"];
-                string fileName;
-                if (upload != null && upload.ContentLength > 0 && !string.IsNullOrEmpty(upload.FileName))
-                {
-                    fileName = upload.FileName; ;
-                    upload.SaveAs(Server.MapPath("~/Content/Clients/" + fileName));
-                    fileName = "~/Content/Clients/" + fileName;
-                    ViewBag.Photo = fileName;
-                }
-                return PartialView("Upload");
-            }
-            return View();
+            db.Credits.Add(credit);
+            db.SaveChanges();
+            int id = credit.Id;
+            db.Stories.Add(new Story { Date = DateTime.Now, User = "Галимарданов Фаузат", Action = "Добавлен новый клиент", CreditId = id });
+            db.SaveChanges();
+            string profile = "Creditprofile/" + id.ToString();
+            return RedirectToAction(profile, "Home");
         }
 
         public ActionResult Creditlist()
@@ -84,7 +79,6 @@ namespace MobileCRM.Controllers
             {
                 int idAdd = Convert.ToInt32(Request["CreditId"]);
                 int idEdit = Convert.ToInt32(Request["Id"]);
-                throw new Exception("123");
                 switch (Request["Type"])
                 {
                     case "comment":
@@ -204,5 +198,19 @@ namespace MobileCRM.Controllers
             return RedirectToAction("Addcreditprofile");
         }
 
+        public JsonResult UploadPhoto()
+        {
+            foreach (string file in Request.Files)
+            {
+                var upload = Request.Files[file];
+                if (upload != null)
+                {
+                    string fileName = "~/Content/Clients/" + System.IO.Path.GetFileName(upload.FileName);
+                    upload.SaveAs(Server.MapPath(fileName));
+                    photoPath = fileName;
+                }
+            }
+            return Json(photoPath);
+        }
     }
 }
