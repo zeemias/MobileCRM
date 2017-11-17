@@ -1,4 +1,5 @@
-﻿@model IEnumerable<MobileCRM.Models.Credit>
+﻿@model MobileCRM.Models.IndexViewModel
+@using MobileCRM.Helpers
 @{
     ViewBag.Title = "ДельтаКредит - Список кредитных дел";
 }
@@ -81,7 +82,7 @@
                                     <th></th>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model)
+                                        @foreach (var item in Model.Credits)
                                         {
                                             <tr>
                                                 <td>@item.Id</td>
@@ -94,7 +95,9 @@
                                         }
                                     </tbody>
                                 </table>
-
+                                <div class="btn-group">
+                                    @Html.PageLinks(Model.PageInfo, x => Url.Action("Creditlist", new { page = x }))
+                                </div>
                             </div>
                         </div>
                     </div>

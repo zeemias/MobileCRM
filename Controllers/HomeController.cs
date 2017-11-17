@@ -43,11 +43,16 @@ namespace MobileCRM.Controllers
             return RedirectToAction(profile, "Home");
         }
 
-        public ActionResult Creditlist()
+        public ActionResult Creditlist(int page = 1)
         {
             if (User.Identity.IsAuthenticated)
             {
-                return View(db.Credits.ToList());
+                int pageSize = 10;
+                List<Credit> credits = db.Credits.OrderBy(t => t.Surname).ThenBy(t => t.Name).ThenBy(t => t.Patronymic).ToList();
+                IEnumerable<Credit> creditsPerPages = credits.Skip((page - 1) * pageSize).Take(pageSize);
+                PageInfo pageInfo = new PageInfo { PageNumber = page, PageSize = pageSize, TotalItems = credits.Count };
+                IndexViewModel ivm = new IndexViewModel { PageInfo = pageInfo, Credits = creditsPerPages };
+                return View(ivm);
             }
             return RedirectToAction("Login", "Account");
         }

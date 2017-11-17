@@ -154,10 +154,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\PagingHelpers.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Credit.cs" />
     <Compile Include="Models\CreditContext.cs" />
+    <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PageInfo.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Story.cs" />
     <Compile Include="Models\User.cs" />

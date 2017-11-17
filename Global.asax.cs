@@ -27,7 +27,7 @@ namespace MobileCRM
                 if (httpException.GetHttpCode() == 404)
                 {
                     ShowErrorPage("Error404.cshtml", exception);
-                    throw new Exception("Ошибка попалась");
+                    throw new Exception("Ошибка 404");
                     return;
                 }
             }
