@@ -13,6 +13,7 @@ namespace MobileCRM.Controllers
 {
     public class HomeController : Controller
     {
+
         CreditContext db = new CreditContext();
         public string photoPath;
 

@@ -149,6 +149,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -168,8 +169,6 @@
     <Content Include="App_Data\MobileCRM_log.ldf">
       <DependentUpon>MobileCRM.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Clients\Client1.jpg" />
     <Content Include="Content\Clients\Client2.jpg" />
     <Content Include="Content\css\animate.min.css" />
@@ -178,6 +177,7 @@
     <Content Include="Content\css\paper-dashboard.css" />
     <Content Include="Content\css\themify-icons.css" />
     <Content Include="Content\fonts\themify.svg" />
+    <Content Include="Content\html\RangeErrorPage.html" />
     <Content Include="Content\img\apple-icon-1.png" />
     <Content Include="Content\img\apple-icon.png" />
     <Content Include="Content\img\avatar.png" />
@@ -193,7 +193,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -243,6 +242,9 @@
     <Content Include="Views\Account\Logoff.cshtml" />
     <Content Include="Views\Home\EditProfile.cshtml" />
     <Content Include="Views\Home\AddProfile.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\Forbidden.cshtml" />
+    <Content Include="Views\Error\BadRequest.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

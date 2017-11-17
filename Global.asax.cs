@@ -17,5 +17,27 @@ namespace MobileCRM
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            var exception = Server.GetLastError();
+            var httpException = exception as HttpException;
+            if (httpException != null)
+            {
+                if (httpException.GetHttpCode() == 404)
+                {
+                    ShowErrorPage("Error404.cshtml", exception);
+                    throw new Exception("Ошибка попалась");
+                    return;
+                }
+            }
+            throw new Exception("Ошибка попалась");
+            //ShowErrorPage("Error.cshtml", exception);
+        }
+
+        private void ShowErrorPage(string v, Exception exception)
+        {
+            
+        }
     }
 }
