@@ -14,6 +14,12 @@
             </div>
             <ul class="nav">
                 <li>
+                    <a href="/Home/Userprofile">
+                        <i class="ti-user"></i>
+                        <p>Личный кабинет</p>
+                    </a>
+                </li>
+                <li>
                     <a href="/Home/Addcreditprofile">
                         <i class="ti-plus"></i>
                         <p>Кредитное дело</p>
@@ -25,12 +31,24 @@
                         <p>Кредитные дела</p>
                     </a>
                 </li>
-                <li>
-                    <a href="/Home/Creditprofile/1">
-                        <i class="ti-user"></i>
-                        <p>Карта клиента</p>
-                    </a>
-                </li>
+                @if (ViewBag.Role == "Программист")
+                {
+                    <li>
+                        <a href="/Home/Errorlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Список ошибок</p>
+                        </a>
+                    </li>
+                }
+                @if (ViewBag.Role != "Пользователь")
+                {
+                    <li>
+                        <a href="/Home/Userlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Пользователи</p>
+                        </a>
+                    </li>
+                }
             </ul>
         </div>
     </div>
@@ -90,7 +108,7 @@
                                                 <td>@item.Birthday.ToString("d")</td>
                                                 <td>+@item.PhoneNumber</td>
                                                 <td>@item.Email</td>
-                                                <td><a href="/Home/Creditprofile/@item.Id" style="btn btn-info btn-fill btn-wd">Открыть</a></td>
+                                                <td><a href="/Home/Creditprofile/@item.Id">Открыть</a></td>
                                             </tr>
                                         }
                                     </tbody>

@@ -3,11 +3,6 @@
     ViewBag.Title = "ДельтаКредит - Регистрация нового пользователя";
 }
 
-
-@{
-    ViewBag.Title = "ДельтаКредит - Вход в личный кабинет";
-}
-
 <div class="wrapper bg">
     <div class="card reg-center">
         <div class="row">
@@ -26,19 +21,19 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Логин</label>
-                        <input type="text" class="form-control border-input" name="Login">
+                        <input type="text" class="form-control border-input" name="Login" required>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Фамилия</label>
-                        <input type="text" class="form-control border-input" name="Surname">
+                        <input type="text" class="form-control border-input" name="Surname" required>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control border-input" name="Name">
+                        <input type="text" class="form-control border-input" name="Name" required>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -50,19 +45,19 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="password" class="form-control border-input" name="Password">
+                        <input type="password" class="form-control border-input" name="Password" required>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Подтверждение пароля</label>
-                        <input type="password" class="form-control border-input" name="ConfirmPassword">
+                        <input type="password" class="form-control border-input" name="ConfirmPassword" required>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <div class="text-center">
-                            <button type="submit" class="btn btn-info btn-fill btn-wd">Создать аккаунт</button>
+                            <button type="submit" class="btn btn-danger btn-fill btn-wd">Создать аккаунт</button>
                         </div>
                     </div>
                 </div>
@@ -77,6 +72,7 @@
         </div>
     </div>
 </div>
+
 
 
 

@@ -1,17 +1,17 @@
-﻿<div class="row">
+﻿<label>Добавить в историю</label>
+<div class="row">
     @using (Ajax.BeginForm("Creditprofile", "Home", new AjaxOptions { UpdateTargetId = "stories" }, new { id = "AddStoryForm" }))
     {
         <div class="col-md-8">
             <div class="form-group">
-                <label>Добавить в историю</label>
                 <input type="text" name="Type" value="story" hidden>
                 <input type="text" class="form-control border-input" name="Action" id="story" required>
                 <input type="text" name="CreditId" value="@ViewBag.Credit.Id" hidden>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="form-group">
-                <button type="submit" class="btn btn-info btn-fill btn-wd bottom" id="btnAddStory">Добавить</button>
+            <div class="form-group" >
+                <button type="submit" class="btn btn-danger btn-fill btn-wd" id="btnAddStory">Добавить</button>
             </div>
         </div>
     }

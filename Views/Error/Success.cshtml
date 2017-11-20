@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "ДельтаКредит - Ошибка";
+}
+
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="https://www.deltacredit.ru" class="simple-text">
+                    <img src="@Url.Content("~/Content/img/logo.png")" width="90%">
+                </a>
+            </div>
+            <ul class="nav">
+                <li>
+                    <a href="/Home/Userprofile">
+                        <i class="ti-user"></i>
+                        <p>Личный кабинет</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Home/Addcreditprofile">
+                        <i class="ti-plus"></i>
+                        <p>Кредитное дело</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Home/Creditlist">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Кредитные дела</p>
+                    </a>
+                </li>
+                @if (ViewBag.Role == "Программист")
+                {
+                    <li>
+                        <a href="/Home/Errorlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Список ошибок</p>
+                        </a>
+                    </li>
+                }
+                @if (ViewBag.Role != "Пользователь")
+                {
+                    <li>
+                        <a href="/Home/Userlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Пользователи</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Ошибка</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/Account/Logoff">
+                                <i class="ti-user"></i>
+                                <p>Выйти</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <h2>Спасибо!</h2>
+                <h3>Ваш комментарий отправлен нашей команде разработчиков.</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

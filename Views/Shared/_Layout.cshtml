@@ -12,11 +12,12 @@
     <link href="@Url.Content("~/Content/css/bootstrap.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/css/animate.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/css/paper-dashboard.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/themify-icons.css")" rel="stylesheet">
     <link href="@Url.Content("~/Content/css/demo.css")" rel="stylesheet" />
 
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-    <link href="@Url.Content("~/Content/css/themify-icons.css")" rel="stylesheet">
+    
 
 </head>
 <body>
@@ -30,45 +31,40 @@
     <script src="@Url.Content("~/Content/js/bootstrap-notify.js")"></script>
     <script src="@Url.Content("~/Content/js/paper-dashboard.js")"></script>
     <script src="@Url.Content("~/Content/js/demo.js")"></script>
-    <script type="text/javascript">
-        $('#submit').on('click', function (e) {
-            e.preventDefault();
-            var files = document.getElementById('uploadFile').files;
-            if (files.length > 0) {
-                if (window.FormData !== undefined) {
-                    var data = new FormData();
-                    for (var x = 0; x < files.length; x++) {
-                        data.append("file" + x, files[x]);
-                    }
-
-                    $.ajax({
-                        type: "POST",
-                        url: '@Url.Action("UploadPhoto", "Home")',
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (result) {
-                                alert("Фото загружено!");
-                                $('#photo').attr('src', result.slice(1));
-                                $('#PhotoProfile').val(result);
-                            },
-                    error: function (xhr, status, p3) {
-                                alert(xhr.responseText);
-                            }
-                        });
-            } else {
-                alert("Браузер не поддерживает загрузку файлов HTML5!");
+    <script>
+    $('#submit').on('click', function (e) {
+    e.preventDefault();
+    var files = document.getElementById('uploadFile').files;
+    if (files.length > 0) {
+        if (window.FormData !== undefined) {
+            var data = new FormData();
+            for (var x = 0; x < files.length; x++) {
+                data.append("file" + x, files[x]);
             }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UploadPhoto", "Home")',
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (result) {
+                    alert("Фото загружено!");
+                    $('#photo').attr('src', result.slice(1));
+                    $('#PhotoProfile').val(result);
+                },
+                error: function (xhr, status, p3) {
+                    alert(xhr.responseText);
+                }
+            });
+        } else {
+            alert("Браузер не поддерживает загрузку файлов HTML5!");
         }
-        });
+    }
+});
 
-        $('#save').on('click', function (e) { $('#btnform').click() });
+$('#save').on('click', function (e) { $('#btnform').click() });
 
-        $('#call').on('click', function (e) {
-            $('#story').val("Звонок клиенту");
-            $('#AddStoryForm').submit();
-            $('#story').val();
-        });
-    </script>
-}
+$('#SelectStatus').on('change', function (e) { $('#btnstatus').click() });
+</script>
 </html>

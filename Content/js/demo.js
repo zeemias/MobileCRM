@@ -1,7 +1,24 @@
-type = ['','info','success','warning','danger'];
 
 
 demo = {
+
+    showNotification: function (from, align, text) {
+        color = 4;
+
+        $.notify({
+            icon: "ti-gift",
+            message: text
+
+        }, {
+                type: type[color],
+                timer: 4000,
+                placement: {
+                    from: from,
+                    align: align
+                }
+            });
+    },
+
     initPickColor: function(){
         $('.pick-class-label').click(function(){
             var new_class = $(this).attr('new-class');
@@ -130,22 +147,6 @@ demo = {
         marker.setMap(map);
     },
 
-	showNotification: function(from, align){
-    	color = Math.floor((Math.random() * 4) + 1);
-
-    	$.notify({
-        	icon: "ti-gift",
-        	message: "Welcome to <b>Paper Dashboard</b> - a beautiful freebie for every web developer."
-
-        },{
-            type: type[color],
-            timer: 4000,
-            placement: {
-                from: from,
-                align: align
-            }
-        });
-	},
     initDocumentationCharts: function(){
     //     	init single simple line chart
         var dataPerformance = {

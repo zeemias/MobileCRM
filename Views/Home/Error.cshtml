@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "ДельтаКредит - Ошибка";
+}
+
+
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="https://www.deltacredit.ru" class="simple-text">
+                    <img src="@Url.Content("~/Content/img/logo.png")" width="90%">
+                </a>
+            </div>
+            <ul class="nav">
+                <li>
+                    <a href="/Home/Userprofile">
+                        <i class="ti-user"></i>
+                        <p>Личный кабинет</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Home/Addcreditprofile">
+                        <i class="ti-plus"></i>
+                        <p>Кредитное дело</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Home/Creditlist">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Кредитные дела</p>
+                    </a>
+                </li>
+                @if (ViewBag.Role == "Программист")
+                {
+                    <li>
+                        <a href="/Home/Errorlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Список ошибок</p>
+                        </a>
+                    </li>
+                }
+                @if (ViewBag.Role != "Пользователь")
+                {
+                    <li>
+                        <a href="/Home/Userlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Пользователи</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Ошибка</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/Account/Logoff">
+                                <i class="ti-user"></i>
+                                <p>Выйти</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+                <div class="container-fluid">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Ошибка №@ViewBag.Error.Id</h4>
+                        </div>
+                        <form method="post" action="/Home/Error">
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Дата</label>
+                                            <input type="text" class="form-control border-input" value="@ViewBag.Error.Date">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Пользователь</label>
+                                            <input type="text" class="form-control border-input" value="@ViewBag.Error.User">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Статус ошибки</label>
+                                            <select class="form-control border-input" name="Status" id="SelectStatus">
+                                                @if (ViewBag.Error.Status == "Новая ошибка")
+                                                {
+                                                    <option value="Новая ошибка" selected>Новая ошибка</option>
+                                                    <option value="На рассмотрении">На рассмотрении</option>
+                                                    <option value="Исправлена">Исправлена</option>
+                                                    <option value="Не исправлена">Не исправлена</option>
+                                                }
+                                                @if (ViewBag.Error.Status == "На рассмотрении")
+                                                {
+                                                    <option value="Новая ошибка">Новая ошибка</option>
+                                                    <option value="На рассмотрении" selected>На рассмотрении</option>
+                                                    <option value="Исправлена">Исправлена</option>
+                                                    <option value="Не исправлена">Не исправлена</option>
+                                                }
+                                                @if (ViewBag.Error.Status == "Исправлена")
+                                                {
+                                                    <option value="Новая ошибка">Новая ошибка</option>
+                                                    <option value="На рассмотрении">На рассмотрении</option>
+                                                    <option value="Исправлена" selected>Исправлена</option>
+                                                    <option value="Не исправлена">Не исправлена</option>
+                                                }
+                                                @if (ViewBag.Error.Status == "Не исправлена")
+                                                {
+                                                    <option value="Новая ошибка">Новая ошибка</option>
+                                                    <option value="На рассмотрении">На рассмотрении</option>
+                                                    <option value="Исправлена">Исправлена</option>
+                                                    <option value="Не исправлена" selected>Не исправлена</option>
+                                                }
+                                            </select>
+                                            <input type="hidden" value="@ViewBag.Error.Id" name="Id" />
+                                            <button type="submit" id="btnstatus" hidden></button>
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Название ошибки</label>
+                                    <input type="text" class="form-control border-input" value="@ViewBag.Error.Message">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Текст ошибки</label>
+                                    <textarea rows="15" class="form-control border-input">@ViewBag.Error.StackTrace</textarea>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Комментарий пользователя</label>
+                                    <textarea rows="5" class="form-control border-input">@ViewBag.Error.UserComment</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                        </div>
+        </div>
+    </div>
+</div>

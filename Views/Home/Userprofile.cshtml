@@ -1,0 +1,176 @@
+﻿
+@{
+    ViewBag.Title = "ДельтаКредит - Пользователь";
+}
+
+
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="https://www.deltacredit.ru" class="simple-text">
+                    <img src="@Url.Content("~/Content/img/logo.png")" width="90%">
+                </a>
+            </div>
+            <ul class="nav">
+                <li>
+                    <a href="/Home/Userprofile">
+                        <i class="ti-user"></i>
+                        <p>Личный кабинет</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Home/Addcreditprofile">
+                        <i class="ti-plus"></i>
+                        <p>Кредитное дело</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Home/Creditlist">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Кредитные дела</p>
+                    </a>
+                </li>
+                @if (ViewBag.Role == "Программист")
+                {
+                    <li>
+                        <a href="/Home/Errorlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Список ошибок</p>
+                        </a>
+                    </li>
+                }
+                @if (ViewBag.Role != "Пользователь")
+                {
+                    <li>
+                        <a href="/Home/Userlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Пользователи</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Пользователь</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/Account/Logoff">
+                                <i class="ti-user"></i>
+                                <p>Выйти</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Фото</h4>
+                            </div>
+                            <div class="content">
+                                <div class="form-group">
+                                    <img src="@Url.Content(ViewBag.User.Photo)" width="100%" id="photo">
+                                    <div class="text-center">
+                                        <input type="file" name="upload" id="uploadFile" />
+                                        <button id="submit" class="btn btn-danger btn-fill btn-wd photo">Загрузить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Информация</h4>
+                            </div>
+                            <div class="content">
+                                <form method="post" action="/Home/Userprofile">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>ID</label>
+                                                <input type="text" class="form-control border-input" value="@ViewBag.User.Id" disabled>
+                                                <input type="hidden" value="@ViewBag.User.Id" name="Id">
+                                                <input type="text" value="@ViewBag.User.Photo" name="Photo" id="PhotoProfile" hidden/>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>Логин</label>
+                                                <input type="text" class="form-control border-input" value="@ViewBag.User.Login" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>Группа</label>
+                                                <input type="text" class="form-control border-input" value="@ViewBag.User.Role" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Фамилия</label>
+                                                <input type="text" class="form-control border-input" placeholder="Фамилия" name="Surname" value="@ViewBag.User.Surname" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Имя</label>
+                                                <input type="text" class="form-control border-input" placeholder="Имя" name="Name" value="@ViewBag.User.Name" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Отчество</label>
+                                                <input type="text" class="form-control border-input" placeholder="Отчество" name="Patronymic" value="@ViewBag.User.Patronymic">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Новый пароль</label>
+                                                <input type="password" class="form-control border-input" placeholder="Новый пароль" name="Password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-danger btn-fill btn-wd">Сохранить</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

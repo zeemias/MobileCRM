@@ -19,5 +19,9 @@ namespace MobileCRM.Models
         public string Patronymic { get; set; }
         // Пароль пользователя
         public string Password { get; set; }
+        // Роль пользователя
+        public string Role { get; set; }
+        // Фото пользователя
+        public string Photo { get; set; }
     }
 }

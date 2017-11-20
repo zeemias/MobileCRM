@@ -49,16 +49,16 @@
             </div>
         </div>
     </div>
+    <label>Телефон</label>
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
-                <label>Телефон</label>
-                <input type="tel" class="form-control border-input" value="@ViewBag.Credit.PhoneNumber" name="PhoneNumber">
+                <input type="tel" class="form-control border-input" align="right" value="@ViewBag.Credit.PhoneNumber" name="PhoneNumber">
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <a href="tel:+@ViewBag.Credit.PhoneNumber" class="btn btn-info btn-fill btn-wd bottom" id="call">Позвонить</a>
+                <a href="tel:+@ViewBag.Credit.PhoneNumber" class="btn btn-danger btn-fill btn-wd" id="call">Позвонить</a>
             </div>
         </div>
     </div>

@@ -1,0 +1,128 @@
+﻿@model MobileCRM.Models.IndexViewModel
+@using MobileCRM.Helpers
+@{
+    ViewBag.Title = "ДельтаКредит - Список ошибок";
+}
+
+<div class="wrapper">
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="https://www.deltacredit.ru" class="simple-text">
+                    <img src="@Url.Content("~/Content/img/logo.png")" width="90%">
+                </a>
+            </div>
+            <ul class="nav">
+                <li>
+                    <a href="/Home/Userprofile">
+                        <i class="ti-user"></i>
+                        <p>Личный кабинет</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Home/Addcreditprofile">
+                        <i class="ti-plus"></i>
+                        <p>Кредитное дело</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Home/Creditlist">
+                        <i class="ti-view-list-alt"></i>
+                        <p>Кредитные дела</p>
+                    </a>
+                </li>
+                @if (ViewBag.Role == "Программист")
+                {
+                    <li class="active">
+                        <a href="/Home/Errorlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Список ошибок</p>
+                        </a>
+                    </li>
+                }
+                @if (ViewBag.Role != "Пользователь")
+                {
+                    <li>
+                        <a href="/Home/Userlist">
+                            <i class="ti-view-list-alt"></i>
+                            <p>Пользователи</p>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar bar1"></span>
+                        <span class="icon-bar bar2"></span>
+                        <span class="icon-bar bar3"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Ошибки</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/Account/Logoff">
+                                <i class="ti-user"></i>
+                                <p>Выйти</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Список ошибок</h4>
+                                <p class="category"></p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <th>ID</th>
+                                    <th>Дата</th>
+                                    <th>Название ошибки</th>
+                                    <th>Пользователь</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Errors)
+                                        {
+                                            <tr>
+                                                <td>@item.Id</td>
+                                                <td>@item.Date</td>
+                                                <td>@item.Message</td>
+                                                <td>@item.User</td>
+                                                <td>@item.Status</td>
+                                                <td><a href="/Home/Error/@item.Id">Открыть</a></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                <div class="btn-group">
+                                    @Html.PageLinks(Model.PageInfo, x => Url.Action("Errorlist", new { page = x }))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

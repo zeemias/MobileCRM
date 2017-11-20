@@ -12,5 +12,6 @@ namespace MobileCRM.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Story> Stories { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Error> Errors { get; set; }
     }
 }

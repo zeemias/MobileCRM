@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Security;
 using System.Web.Mvc;
 using MobileCRM.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MobileCRM.Controllers
 {
@@ -24,7 +26,8 @@ namespace MobileCRM.Controllers
                 User user = null;
                 using (CreditContext db = new CreditContext())
                 {
-                    user = db.Users.FirstOrDefault(u => u.Login == model.Login && u.Password == model.Password);
+                    string pass = getMd5Hash(model.Password);
+                    user = db.Users.FirstOrDefault(u => u.Login == model.Login && u.Password == pass);
 
                 }
                 if (user != null)
@@ -61,10 +64,11 @@ namespace MobileCRM.Controllers
                 {
                     using (CreditContext db = new CreditContext())
                     {
-                        db.Users.Add(new User { Login = model.Login, Name = model.Name, Surname = model.Surname, Patronymic = model.Patronymic, Password = model.Password });
+                        string pass = getMd5Hash(model.Password);
+                        db.Users.Add(new User { Login = model.Login, Name = model.Name, Surname = model.Surname, Patronymic = model.Patronymic, Password = pass, Role = "Пользователь", Photo = "~/Content/img/avatar.png" });
                         db.SaveChanges();
 
-                        user = db.Users.Where(u => u.Login == model.Login && u.Password == model.Password).FirstOrDefault();
+                        user = db.Users.FirstOrDefault(u => u.Login == model.Login && u.Password == pass);
                     }
                     if (user != null)
                     {
@@ -88,6 +92,18 @@ namespace MobileCRM.Controllers
                 FormsAuthentication.SignOut();
             }
             return RedirectToAction("Login", "Account");
+        }
+
+        public string getMd5Hash(string input)
+        {
+            MD5 md5Hasher = MD5.Create();
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
     }
 }
