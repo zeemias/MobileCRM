@@ -21,7 +21,7 @@ namespace MobileCRM.Controllers
 
         public ActionResult Index()
         {
-            throw new Exception("Тест");
+            //throw new Exception("Тест");
             return RedirectToAction("Addcreditprofile", "Home"); ;
         }
 
