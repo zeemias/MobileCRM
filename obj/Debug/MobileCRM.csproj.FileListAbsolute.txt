@@ -155,3 +155,5 @@ C:\Users\Trainee\Desktop\Projects\MobileCRM\MobileCRM\obj\Debug\MobileCRM.csproj
 C:\Users\Trainee\Desktop\Projects\MobileCRM\MobileCRM\obj\Debug\MobileCRM.csproj.CoreCompileInputs.cache
 C:\Users\Trainee\Desktop\Projects\MobileCRM\MobileCRM\obj\Debug\MobileCRM.dll
 C:\Users\Trainee\Desktop\Projects\MobileCRM\MobileCRM\obj\Debug\MobileCRM.pdb
+D:\GitHab\Repositories\MobileCRM\obj\Debug\MobileCRM.dll
+D:\GitHab\Repositories\MobileCRM\obj\Debug\MobileCRM.pdb
