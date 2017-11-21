@@ -1,4 +1,6 @@
-﻿
+﻿@model MobileCRM.Models.RegisterModel
+@{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
 @{
     ViewBag.Title = "ДельтаКредит - Регистрация нового пользователя";
 }
@@ -13,7 +15,7 @@
                     </a>
                 </div>
             </div>
-            <form method="post" action="/Account/Register" class="log-form">
+            <form method="post" action="/Account/Register" class="log-form" id="registerForm">
                 @Html.AntiForgeryToken()
                 <div class="text-center">
                     <h3>Регистрация</h3>
@@ -21,37 +23,43 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Логин</label>
-                        <input type="text" class="form-control border-input" name="Login" required>
+                        @Html.TextBoxFor(t=>t.Login, new { @class= "form-control border-input" })
+                        @Html.ValidationMessageFor(t => t.Login)
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Фамилия</label>
-                        <input type="text" class="form-control border-input" name="Surname" required>
+                        @Html.TextBoxFor(t => t.Surname, new { @class = "form-control border-input" })
+                        @Html.ValidationMessageFor(t => t.Surname)
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control border-input" name="Name" required>
+                        @Html.TextBoxFor(t => t.Name, new { @class = "form-control border-input" })
+                        @Html.ValidationMessageFor(t => t.Name)
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Отчество</label>
-                        <input type="text" class="form-control border-input" name="Patronymic">
+                        @Html.TextBoxFor(t => t.Patronymic, new { @class = "form-control border-input" })
+                        @Html.ValidationMessageFor(t => t.Patronymic)
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="password" class="form-control border-input" name="Password" required>
+                        @Html.PasswordFor(t => t.Password, new { @class = "form-control border-input" })
+                        @Html.ValidationMessageFor(t => t.Password)
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Подтверждение пароля</label>
-                        <input type="password" class="form-control border-input" name="ConfirmPassword" required>
+                        @Html.PasswordFor(t => t.ConfirmPassword, new { @class = "form-control border-input" })
+                        @Html.ValidationMessageFor(t => t.ConfirmPassword)
                     </div>
                 </div>
                 <div class="col-md-12">

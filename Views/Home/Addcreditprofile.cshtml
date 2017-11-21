@@ -1,4 +1,6 @@
-﻿
+﻿@model MobileCRM.Models.Credit
+@{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
 @{
     ViewBag.Title = "ДельтаКредит - Добавление нового кредитного дела";
 }
@@ -106,12 +108,14 @@
                                 </div>
                                 <div class="content">
                                     <form method="post" action="/Home/AddProfile">
-                                        <input type="text" value="~/Content/img/avatar.png" name="Photo" id="PhotoProfile" hidden />
+                                        @Html.HiddenFor(t => t.Photo, new { @class = "form-control border-input", @id = "PhotoProfile" })
+                                        @Html.ValidationMessageFor(t => t.Photo)
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Фамилия</label>
-                                                    <input type="text" class="form-control border-input" placeholder="Фамилия" name="Surname" required>
+                                                    @Html.TextBoxFor(t => t.Surname, new { @class = "form-control border-input", @placeholder = "Фамилия" })
+                                                    @Html.ValidationMessageFor(t => t.Surname)
                                                 </div>
                                             </div>
                                         </div>
@@ -120,13 +124,15 @@
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Имя</label>
-                                                    <input type="text" class="form-control border-input" placeholder="Имя" name="Name" required>
+                                                    @Html.TextBoxFor(t => t.Name, new { @class = "form-control border-input", @placeholder = "Имя" })
+                                                    @Html.ValidationMessageFor(t => t.Name)
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label>Отчество</label>
-                                                    <input type="text" class="form-control border-input" placeholder="Отчество" name="Patronymic">
+                                                    @Html.TextBoxFor(t => t.Patronymic, new { @class = "form-control border-input", @placeholder = "Отчество" })
+                                                    @Html.ValidationMessageFor(t => t.Patronymic)
                                                 </div>
                                             </div>
                                         </div>
@@ -135,13 +141,15 @@
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Дата рождения</label>
-                                                    <input type="date" class="form-control border-input" placeholder="@DateTime.Now.ToString("d")" name="Birthday" required>
+                                                    <input type="date" class="form-control border-input" placeholder="@DateTime.Now.ToString("d")" min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" id="BirthdayHtml">
+                                                    @Html.HiddenFor(t => t.Birthday, new {@id = "Birthday"})
+                                                    @Html.ValidationMessageFor(t => t.Birthday)
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label>Источник обращения</label>
-                                                    <select class="form-control border-input" name="Source" required>
+                                                    <select class="form-control border-input" id="SourceHtml" required>
                                                         <option value="Агентство недвижимости">Агентство недвижимости</option>
                                                         <option value="Частный риелтор">Частный риелтор</option>
                                                         <option value="Наружная реклама">Наружная реклама</option>
@@ -150,6 +158,8 @@
                                                         <option value="Личный кабинет">Личный кабинет</option>
                                                         <option value="РосБанк">РосБанк</option>
                                                     </select>
+                                                    @Html.HiddenFor(t => t.Source, new { @id = "Source" })
+                                                    @Html.ValidationMessageFor(t => t.Source)
                                                 </div>
                                             </div>
                                         </div>
@@ -157,13 +167,15 @@
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Телефон</label>
-                                                    <input type="tel" class="form-control border-input" placeholder="Телефон" name="PhoneNumber" required>
+                                                    @Html.TextBoxFor(t => t.PhoneNumber, new { @class = "form-control border-input", @placeholder = "Телефон" })
+                                                    @Html.ValidationMessageFor(t => t.PhoneNumber)
                                                 </div>
                                             </div>
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label>Почта</label>
-                                                    <input type="email" class="form-control border-input" placeholder="Почта" name="Email" required>
+                                                    @Html.TextBoxFor(t => t.Email, new { @class = "form-control border-input", @placeholder = "Почта" })
+                                                    @Html.ValidationMessageFor(t => t.Email)
                                                 </div>
                                             </div>
                                         </div>
@@ -172,7 +184,8 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Место работы</label>
-                                                    <input type="text" class="form-control border-input" placeholder="Место работы" name="Work">
+                                                    @Html.TextBoxFor(t => t.Work, new { @class = "form-control border-input", @placeholder = "Место работы" })
+                                                    @Html.ValidationMessageFor(t => t.Work)
                                                 </div>
                                             </div>
                                         </div>
@@ -190,3 +203,7 @@
         </div>
       </div>
     </div>
+<script>
+    $('#SourceHtml').on('change', function (e) { $('#Source').val($('#SourceHtml :selected').val()) });
+    $('#BirthdayHtml').on('change', function (e) { $('#Birthday').val($('#BirthdayHtml').val()) });
+</script>

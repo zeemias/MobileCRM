@@ -124,7 +124,32 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Группа</label>
-                                                <input type="text" class="form-control border-input" value="@ViewBag.User.Role" disabled>
+                                                @if (ViewBag.Role != "Пользователь")
+                                                {
+                                                    if (ViewBag.User.Role == "Пользователь")
+                                                    {
+                                                        <option value="Пользователь" selected>Пользователь</option>
+                                                        <option value="Администратор">Администратор</option>
+                                                        <option value="Программист">Программист</option>
+
+                                                    }
+                                                    if (ViewBag.User.Role == "Администратор")
+                                                    {
+                                                        <option value="Пользователь">Пользователь</option>
+                                                        <option value="Администратор" selected>Администратор</option>
+                                                        <option value="Программист">Программист</option>
+                                                    }
+                                                    if (ViewBag.User.Role == "Программист")
+                                                    {
+                                                        <option value="Пользователь">Пользователь</option>
+                                                        <option value="Администратор">Администратор</option>
+                                                        <option value="Программист" selected>Программист</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" class="form-control border-input" value="@ViewBag.User.Role" disabled>
+                                                }
                                             </div>
                                         </div>
                                     </div>

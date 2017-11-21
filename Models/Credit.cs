@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MobileCRM.Models
 {
@@ -11,27 +12,29 @@ namespace MobileCRM.Models
         // ID кредитного дела 
         public int Id { get; set; }
         // Имя клиента 
-        [Required]
+        [Required(ErrorMessage = "Введите имя клиента")]
         public string Name { get; set; }
         // Фамилия клиента 
-        [Required]
+        [Required(ErrorMessage = "Введите фамилию клиента")]
         public string Surname { get; set; }
         // Отчество клиента 
         public string Patronymic { get; set; }
         // Ссылка на фото клиента
-        [Required]
         public string Photo { get; set; }
         // Почта клиента 
-        [Required]
+        [Required(ErrorMessage = "Введите почту клиента")]
+        [DataType(DataType.EmailAddress)]
+        [Remote("ValidateEmail", "Home")]
         public string Email { get; set; }
         // Источник обращения 
-        [Required]
         public string Source { get; set; }
         // Номер телефона клиента 
-        [Required]
-        public long PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Введите номер телефона клиента")]
+        [Remote("ValidatePhone", "Home")]
+        public string PhoneNumber { get; set; }
         // Дата рождения клиента 
-        [Required]
+        [Required(ErrorMessage = "Введите дату рождения клиента")]
+        [DataType(DataType.Date)]
         public DateTime Birthday { get; set; }
         // Место работы клиента 
         public string Work { get; set; }

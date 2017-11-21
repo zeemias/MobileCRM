@@ -11,13 +11,11 @@ namespace MobileCRM.Models
         // ID комментария
         public int Id { get; set; }
         // Дата 
-        [Required]
         public DateTime Date { get; set; }
         // ФИО пользователя
-        [Required]
         public string User { get; set; }
         // Комментарий
-        [Required]
+        [Required(ErrorMessage = "Введите комментарий")]
         public string UserComment { get; set; }
         // Кредитное дело
         public int? CreditId { get; set; }

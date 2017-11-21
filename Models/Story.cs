@@ -11,13 +11,11 @@ namespace MobileCRM.Models
         // ID истории
         public int Id { get; set; }
         // Дата 
-        [Required]
         public DateTime Date { get; set; }
         // ФИО пользователя
-        [Required]
         public string User { get; set; }
         // Действие
-        [Required]
+        [Required(ErrorMessage = "Введите действие")]
         public string Action { get; set; }
         // Кредитное дело
         public int? CreditId { get; set; }

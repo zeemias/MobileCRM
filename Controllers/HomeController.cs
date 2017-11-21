@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace MobileCRM.Controllers
 {
@@ -125,14 +126,19 @@ namespace MobileCRM.Controllers
                 {
                     return RedirectToAction("Http404", "Error");
                 }
-                Credit credit = db.Credits.Find(id);
-                ViewBag.Credit = credit;
-                ViewBag.Comments = db.Comments.Where(t => t.CreditId == id).ToList();
-                ViewBag.Stories = db.Stories.Where(t => t.CreditId == id).ToList();
-                if (credit != null)
+                ViewModel viewModel = new ViewModel()
+                {
+                    Credit = db.Credits.Find(id),
+                    Comment = db.Comments.Where(t => t.CreditId == id).ToList(),
+                    Story = db.Stories.Where(t => t.CreditId == id).ToList()
+                };
+                ViewBag.Credit = viewModel.Credit;
+                ViewBag.Comments = viewModel.Comment;
+                ViewBag.Stories = viewModel.Story;
+                if (viewModel.Credit != null)
                 {
                     ViewBag.Role = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault().Role;
-                    return View();
+                    return View(viewModel);
                 }
                 return RedirectToAction("Http404", "Error");
             }
@@ -187,7 +193,7 @@ namespace MobileCRM.Controllers
                             Source = Request["Source"],
                             Work = Request["Work"],
                             UserLogin = User.Identity.Name,
-                            PhoneNumber = Convert.ToInt64(Request["PhoneNumber"]),
+                            PhoneNumber = Request["PhoneNumber"],
                             Birthday = Convert.ToDateTime(Request["Birthday"])
                         };
                         db.Entry(credit).State = EntityState.Modified;
@@ -356,6 +362,50 @@ namespace MobileCRM.Controllers
                 }
             }
             return Json(photoPath);
+        }
+
+        public JsonResult ValidateLogin(string Login)
+        {
+            User user  = db.Users.FirstOrDefault(t => t.Login == Login);
+            if (user != null)
+            {
+                return Json("Данный логин занят", JsonRequestBehavior.AllowGet);
+            } else
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult ValidateEmail(string Email)
+        {
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(Email);
+            if (match.Success)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("Неправильный Email", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult ValidatePhone(string PhoneNumber)
+        {
+            if(PhoneNumber != null)
+            {
+                Regex regex = new Regex(@"^((\+7|8)+([0-9]){10})$");
+                Match match = regex.Match(PhoneNumber);
+                if (match.Success)
+                {
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json("Неправильный номер телефона", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Неправильный номер телефона", JsonRequestBehavior.AllowGet);
         }
 
         public string getMd5Hash(string input)

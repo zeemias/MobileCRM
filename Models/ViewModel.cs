@@ -7,7 +7,8 @@ namespace MobileCRM.Models
 {
     public class ViewModel
     {
-        public Story Stories { get; set; }
-        public Comment Comments { get; set; }
+        public Credit Credit { get; set; }
+        public List<Story> Story { get; set; }
+        public List<Comment> Comment { get; set; }
     }
 }

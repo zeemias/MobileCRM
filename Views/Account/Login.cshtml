@@ -1,4 +1,6 @@
-﻿
+﻿@model MobileCRM.Models.LoginModel
+@{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
 @{
     ViewBag.Title = "ДельтаКредит - Вход в систему";
 }
@@ -18,16 +20,19 @@
                 <div class="text-center">
                     <h3>Вход</h3>
                 </div>
+                    @Html.ValidationSummary(true)
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Логин</label>
-                            <input type="text" class="form-control border-input" name="Login" required>
+                            @Html.TextBoxFor(t => t.Login, new { @class = "form-control border-input" })
+                            @Html.ValidationMessageFor(t => t.Login)
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Пароль</label>
-                            <input type="password" class="form-control border-input" name="Password" required>
+                            @Html.PasswordFor(t => t.Password, new { @class = "form-control border-input" })
+                            @Html.ValidationMessageFor(t => t.Password)
                         </div>
                     </div>
                     <div class="col-md-12">

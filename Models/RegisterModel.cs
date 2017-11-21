@@ -8,25 +8,25 @@ namespace MobileCRM.Models
 {
     public class RegisterModel
     {
-        [Required]
+        [Required(ErrorMessage = "Введите логин")]
+        [System.Web.Mvc.Remote("ValidateLogin", "Home")]
         public string Login { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите имя")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите фамилию")]
         public string Surname { get; set; }
 
-        [Required]
         public string Patronymic { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите пароль")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Введите подтверждение пароля")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
         public string ConfirmPassword { get; set; }
     }
 }

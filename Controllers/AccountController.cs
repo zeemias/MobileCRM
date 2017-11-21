@@ -53,35 +53,26 @@ namespace MobileCRM.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
-            {
-                User user = null;
+           User user = null;
+           using (CreditContext db = new CreditContext())
+           {
+                user = db.Users.FirstOrDefault(u => u.Login == model.Login);
+           }
+           if (user == null)
+           {
                 using (CreditContext db = new CreditContext())
                 {
-                    user = db.Users.FirstOrDefault(u => u.Login == model.Login);
+                    string pass = getMd5Hash(model.Password);
+                    db.Users.Add(new User { Login = model.Login, Name = model.Name, Surname = model.Surname, Patronymic = model.Patronymic, Password = pass, Role = "Пользователь", Photo = "~/Content/img/avatar.png" });
+                    db.SaveChanges();
+                    user = db.Users.FirstOrDefault(u => u.Login == model.Login && u.Password == pass);
                 }
-                if (user == null)
+                if (user != null)
                 {
-                    using (CreditContext db = new CreditContext())
-                    {
-                        string pass = getMd5Hash(model.Password);
-                        db.Users.Add(new User { Login = model.Login, Name = model.Name, Surname = model.Surname, Patronymic = model.Patronymic, Password = pass, Role = "Пользователь", Photo = "~/Content/img/avatar.png" });
-                        db.SaveChanges();
-
-                        user = db.Users.FirstOrDefault(u => u.Login == model.Login && u.Password == pass);
-                    }
-                    if (user != null)
-                    {
-                        FormsAuthentication.SetAuthCookie(model.Login, true);
-                        return RedirectToAction("Addcreditprofile", "Home");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Пользователь с таким логином уже существует");
+                    FormsAuthentication.SetAuthCookie(model.Login, true);
+                    return RedirectToAction("Addcreditprofile", "Home");
                 }
             }
-
             return View(model);
         }
 

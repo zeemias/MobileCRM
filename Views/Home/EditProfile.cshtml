@@ -1,12 +1,14 @@
-﻿@using (Ajax.BeginForm("Creditprofile", "Home", new AjaxOptions { UpdateTargetId = "profiles" }))
+﻿@model MobileCRM.Models.ViewModel
+
+@using (Ajax.BeginForm("Creditprofile", "Home", new AjaxOptions { UpdateTargetId = "profiles" }))
 {
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
                 <label>ID Кредитного дела</label>
                 <input type="text" class="form-control border-input" value="@ViewBag.Credit.Id" disabled>
-                <input type="hidden" value="@ViewBag.Credit.Id" name="Id">
-                <input type="text" name="Type" value="profile" hidden>
+                <input type="hidden" value="@ViewBag.Credit.Id" id="IdHtml">
+                @Html.HiddenFor(t => t.Credit.Id, new { @id = "Id", @value = @ViewBag.Credit.Id })
             </div>
         </div>
     </div>
@@ -15,7 +17,8 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label>Фамилия</label>
-                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Surname" name="Surname">
+                @Html.EditorFor(t => t.Credit.Surname, new { htmlAttributes = new { @class = "form-control border-input", @id = "Surname" } })
+                @Html.ValidationMessageFor(t => t.Credit.Surname)
             </div>
         </div>
     </div>
@@ -24,28 +27,36 @@
         <div class="col-md-5">
             <div class="form-group">
                 <label>Имя</label>
-                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Name" name="Name">
+                @Html.EditorFor(t => t.Credit.Name, new { htmlAttributes = new { @class = "form-control border-input", @id = "Name" } })
+                @Html.ValidationMessageFor(t => t.Credit.Name)
             </div>
         </div>
         <div class="col-md-7">
             <div class="form-group">
                 <label>Отчество</label>
-                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Patronymic" name="Patronymic">
+                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Patronymic" id="PatronymicHtml">
+                @Html.EditorFor(t => t.Credit.Surname, new { htmlAttributes = new { @class = "form-control border-input", @id = "Surname" } })
+                @Html.ValidationMessageFor(t => t.Credit.Surname)
             </div>
         </div>
     </div>
-    <input type="text" name="Photo" value="@ViewBag.Credit.Photo" hidden id="PhotoProfile" />
+    <input type="text" value="@ViewBag.Credit.Photo" hidden id="PhotoProfile" />
+    @Html.HiddenFor(t => t.Credit.Photo, new { @id = "Photo" })
     <div class="row">
         <div class="col-md-5">
             <div class="form-group">
                 <label>Дата рождения</label>
-                <input type="date" class="form-control border-input" value="@ViewBag.Credit.Birthday.ToString("yyyy-MM-dd")" name="Birthday">
+                <input type="date" class="form-control border-input" value="@ViewBag.Credit.Birthday.ToString("yyyy-MM-dd")" min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" id="BirthdayHtml">
+                @Html.HiddenFor(t => t.Credit.Birthday, new { @id = "Birthday" })
+                @Html.ValidationMessageFor(t => t.Credit.Birthday)
             </div>
         </div>
         <div class="col-md-7">
             <div class="form-group">
                 <label>Почта</label>
-                <input type="email" class="form-control border-input" value="@ViewBag.Credit.Email" name="Email">
+                <input type="email" class="form-control border-input" value="@ViewBag.Credit.Email" id="EmailHtml">
+                @Html.HiddenFor(t => t.Credit.Email, new { @id = "Email" })
+                @Html.ValidationMessageFor(t => t.Credit.Email)
             </div>
         </div>
     </div>
@@ -53,7 +64,8 @@
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
-                <input type="tel" class="form-control border-input" align="right" value="@ViewBag.Credit.PhoneNumber" name="PhoneNumber">
+                @Html.TextBoxFor(t => t.Credit.PhoneNumber, new { @class = "form-control border-input" })
+                @Html.ValidationMessageFor(t => t.Credit.PhoneNumber)
             </div>
         </div>
         <div class="col-md-4">
@@ -66,7 +78,79 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label>Источник обращения</label>
-                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Source" name="Source">
+                <select class="form-control border-input" id="SourceHtml" required>
+                    @if (ViewBag.Credit.Source == "Агентство недвижимости")
+                    {
+                        <option value="Агентство недвижимости" selected>Агентство недвижимости</option>
+                        <option value="Частный риелтор">Частный риелтор</option>
+                        <option value="Наружная реклама">Наружная реклама</option>
+                        <option value="Банк партнер">Банк партнер</option>
+                        <option value="Интернет">Интернет</option>
+                        <option value="Личный кабинет">Личный кабинет</option>
+                        <option value="РосБанк">РосБанк</option>
+                    }
+                    @if (ViewBag.Credit.Source == "Частный риелтор")
+                    {
+                        <option value="Агентство недвижимости">Агентство недвижимости</option>
+                        <option value="Частный риелтор" selected>Частный риелтор</option>
+                        <option value="Наружная реклама">Наружная реклама</option>
+                        <option value="Банк партнер">Банк партнер</option>
+                        <option value="Интернет">Интернет</option>
+                        <option value="Личный кабинет">Личный кабинет</option>
+                        <option value="РосБанк">РосБанк</option>
+                    }
+                    @if (ViewBag.Credit.Source == "Наружная реклама")
+                    {
+                        <option value="Агентство недвижимости">Агентство недвижимости</option>
+                        <option value="Частный риелтор">Частный риелтор</option>
+                        <option value="Наружная реклама" selected>Наружная реклама</option>
+                        <option value="Банк партнер">Банк партнер</option>
+                        <option value="Интернет">Интернет</option>
+                        <option value="Личный кабинет">Личный кабинет</option>
+                        <option value="РосБанк">РосБанк</option>
+                    }
+                    @if (ViewBag.Credit.Source == "Банк партнер")
+                    {
+                        <option value="Агентство недвижимости">Агентство недвижимости</option>
+                        <option value="Частный риелтор">Частный риелтор</option>
+                        <option value="Наружная реклама">Наружная реклама</option>
+                        <option value="Банк партнер" selected>Банк партнер</option>
+                        <option value="Интернет">Интернет</option>
+                        <option value="Личный кабинет">Личный кабинет</option>
+                        <option value="РосБанк">РосБанк</option>
+                    }
+                    @if (ViewBag.Credit.Source == "Интернет")
+                    {
+                        <option value="Агентство недвижимости">Агентство недвижимости</option>
+                        <option value="Частный риелтор">Частный риелтор</option>
+                        <option value="Наружная реклама">Наружная реклама</option>
+                        <option value="Банк партнер">Банк партнер</option>
+                        <option value="Интернет" selected>Интернет</option>
+                        <option value="Личный кабинет">Личный кабинет</option>
+                        <option value="РосБанк">РосБанк</option>
+                    }
+                    @if (ViewBag.Credit.Source == "Личный кабинет")
+                    {
+                        <option value="Агентство недвижимости">Агентство недвижимости</option>
+                        <option value="Частный риелтор">Частный риелтор</option>
+                        <option value="Наружная реклама">Наружная реклама</option>
+                        <option value="Банк партнер">Банк партнер</option>
+                        <option value="Интернет">Интернет</option>
+                        <option value="Личный кабинет" selected>Личный кабинет</option>
+                        <option value="РосБанк">РосБанк</option>
+                    }
+                    @if (ViewBag.Credit.Source == "РосБанк")
+                    {
+                        <option value="Агентство недвижимости">Агентство недвижимости</option>
+                        <option value="Частный риелтор">Частный риелтор</option>
+                        <option value="Наружная реклама">Наружная реклама</option>
+                        <option value="Банк партнер">Банк партнер</option>
+                        <option value="Интернет">Интернет</option>
+                        <option value="Личный кабинет">Личный кабинет</option>
+                        <option value="РосБанк" selected>РосБанк</option>
+                    }
+                </select>
+                @Html.HiddenFor(t => t.Credit.Source, new { @id = "Source" })
             </div>
         </div>
     </div>
@@ -75,10 +159,13 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label>Место работы</label>
-                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Work" name="Work">
+                <input type="text" class="form-control border-input" value="@ViewBag.Credit.Work" id="WorkHtml">
+                @Html.HiddenFor(t => t.Credit.Work, new { @id = "Work" })
+                @Html.ValidationMessageFor(t => t.Credit.Work)
             </div>
         </div>
     </div>
     <button type="submit" id="btnform" name="btnform" hidden></button>
 }
+
 
