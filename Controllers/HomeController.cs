@@ -261,7 +261,8 @@ namespace MobileCRM.Controllers
         [HttpPost]
         public ActionResult Userprofile(User user)
         {
-            string userPassword = db.Users.Find(user.Id).Password;
+            User userProfile = db.Users.Find(user.Id);
+            string userPassword = userProfile.Password;
             if (user.Password != null)
             {
                 string Password = getMd5Hash(user.Password);
@@ -278,10 +279,19 @@ namespace MobileCRM.Controllers
             {
                 user.Password = userPassword;
             }
-            db.Entry(user).State = EntityState.Modified;
+            db.Entry(userProfile).CurrentValues.SetValues(user);
+            db.Entry(userProfile).State = EntityState.Modified;
             db.SaveChanges();
-            string path = "Userprofile/" + user.Id;
-            return RedirectToAction(path, "Home");
+            if (User.Identity.Name == user.Login)
+            {
+                return RedirectToAction("Userprofile", "Home");
+            }
+            else
+            {
+                string path = "Userprofile/" + user.Id;
+                return RedirectToAction(path, "Home");
+            }
+            
         }
 
         public ActionResult Error(int? id)
