@@ -110,16 +110,6 @@
     padding-right: 4%;
 }
 
-.validation-summary-errors {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 15px;
-    z-index: 2;
-    margin-top: -65px;
-    margin-left: -105px;
-}
 
 .validation-summary-errors ul li {
     list-style-type: none;
@@ -131,6 +121,13 @@
     padding-left: 0;
 }
 
-.vertical-align {
-    align-items: center;
+.pd-reg{
+    padding-top: 3%;
+}
+
+.pd-log {
+    padding-top: 13%;
+}
+.mg-left{
+    margin-left: 2%;
 }

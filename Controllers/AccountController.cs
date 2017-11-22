@@ -14,6 +14,10 @@ namespace MobileCRM.Controllers
     {
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Addcreditprofile", "Home");
+            }
             return View();
         }
 
@@ -46,6 +50,10 @@ namespace MobileCRM.Controllers
 
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Addcreditprofile", "Home");
+            }
             return View();
         }
 

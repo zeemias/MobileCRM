@@ -5,9 +5,8 @@
     ViewBag.Title = "ДельтаКредит - Вход в систему";
 }
 
-<div class="wrapper bg">
-    <div class="card center-block log vertical-align">
-        <div class="row">
+<div class="wrapper pd-log bg">
+        <div class="row center-block card log">
             <div class="col-md-12">
                 <div class="form-group">
                     <a href="https://www.deltacredit.ru" class="simple-text">
@@ -19,8 +18,8 @@
                 @Html.AntiForgeryToken()
                 <div class="text-center">
                     <h3>Вход</h3>
-                </div>
                     @Html.ValidationSummary(true)
+                </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Логин</label>
@@ -43,8 +42,6 @@
                         </div>
                     </div>
             </form>
-            </div>
-        <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <div class="text-center">
@@ -54,5 +51,4 @@
             </div>
         </div>
         </div>
-       </div>
 

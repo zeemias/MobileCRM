@@ -26,7 +26,7 @@ namespace MobileCRM.Models
 
         [Required(ErrorMessage = "Введите подтверждение пароля")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
+        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
         public string ConfirmPassword { get; set; }
     }
 }
