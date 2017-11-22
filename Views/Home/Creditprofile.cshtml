@@ -1,4 +1,5 @@
-﻿@model MobileCRM.Models.ViewModel
+﻿@model MobileCRM.Models.Credit
+
 @{Html.EnableClientValidation();}
 @{Html.EnableUnobtrusiveJavaScript();}
 @{
@@ -91,7 +92,7 @@
                             </div>
                             <div class="content">
                                 <div class="form-group">
-                                    <img src="@Url.Content(ViewBag.Credit.Photo)" width="100%" id="photo">
+                                    <img src="@Url.Content(Model.Photo)" width="100%" id="photo">
                                     <div class="text-center">
                                         <input type="file" name="upload" id="uploadFile" />
                                         <button id="submit" class="btn btn-danger btn-fill btn-wd photo">Загрузить</button>
@@ -115,7 +116,167 @@
                             </div>
                             <div class="content">
                                 <div id="profiles">
-                                    @Html.Partial("EditProfile")
+                                    <form method="post" action="/Home/Creditprofile">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>ID Кредитного дела</label>
+                                                    <input type="text" class="form-control border-input" value="@Model.Id" disabled>
+                                                    @Html.HiddenFor(t => t.Id, new { @id = "Id"})
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Фамилия</label>
+                                                    @Html.TextBoxFor(t => t.Surname, new { @class = "form-control border-input" } )
+                                                    @Html.ValidationMessageFor(t => t.Surname)
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label>Имя</label>
+                                                    @Html.TextBoxFor(t => t.Name, new { @class = "form-control border-input" })
+                                                    @Html.ValidationMessageFor(t => t.Name)
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label>Отчество</label>
+                                                    @Html.TextBoxFor(t => t.Patronymic, new { @class = "form-control border-input" })
+                                                    @Html.ValidationMessageFor(t => t.Patronymic)
+                                                </div>
+                                            </div>
+                                        </div>
+                                            @Html.HiddenFor(t => t.Photo, new { @class = "form-control border-input", @id = "PhotoProfile" })
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label>Дата рождения</label>
+                                                    <input type="date" class="form-control border-input" value="@ViewBag.Credit.Birthday.ToString("yyyy-MM-dd")" min="1900-01-01" max="@DateTime.Now.ToString("yyyy-MM-dd")" id="BirthdayHtml">
+                                                    @Html.HiddenFor(t => t.Birthday, new { @id = "Birthday" })
+                                                    @Html.ValidationMessageFor(t => t.Birthday)
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <label>Почта</label>
+                                                    @Html.TextBoxFor(t => t.Email, new { @class = "form-control border-input" })
+                                                    @Html.ValidationMessageFor(t => t.Email)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label>Телефон</label>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    @Html.TextBoxFor(t => t.PhoneNumber, new { @class = "form-control border-input" })
+                                                    @Html.ValidationMessageFor(t => t.PhoneNumber)
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <a href="tel:@Model.PhoneNumber" class="btn btn-danger btn-fill btn-wd" id="call">Позвонить</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Источник обращения</label>
+                                                    <select class="form-control border-input" id="SourceHtml" required>
+                                                        @if (Model.Source == "Агентство недвижимости")
+                                                        {
+                                                            <option value="Агентство недвижимости" selected>Агентство недвижимости</option>
+                                                            <option value="Частный риелтор">Частный риелтор</option>
+                                                            <option value="Наружная реклама">Наружная реклама</option>
+                                                            <option value="Банк партнер">Банк партнер</option>
+                                                            <option value="Интернет">Интернет</option>
+                                                            <option value="Личный кабинет">Личный кабинет</option>
+                                                            <option value="РосБанк">РосБанк</option>
+                                                        }
+                                                        @if (Model.Source == "Частный риелтор")
+                                                        {
+                                                            <option value="Агентство недвижимости">Агентство недвижимости</option>
+                                                            <option value="Частный риелтор" selected>Частный риелтор</option>
+                                                            <option value="Наружная реклама">Наружная реклама</option>
+                                                            <option value="Банк партнер">Банк партнер</option>
+                                                            <option value="Интернет">Интернет</option>
+                                                            <option value="Личный кабинет">Личный кабинет</option>
+                                                            <option value="РосБанк">РосБанк</option>
+                                                        }
+                                                        @if (Model.Source == "Наружная реклама")
+                                                        {
+                                                            <option value="Агентство недвижимости">Агентство недвижимости</option>
+                                                            <option value="Частный риелтор">Частный риелтор</option>
+                                                            <option value="Наружная реклама" selected>Наружная реклама</option>
+                                                            <option value="Банк партнер">Банк партнер</option>
+                                                            <option value="Интернет">Интернет</option>
+                                                            <option value="Личный кабинет">Личный кабинет</option>
+                                                            <option value="РосБанк">РосБанк</option>
+                                                        }
+                                                        @if (Model.Source == "Банк партнер")
+                                                        {
+                                                            <option value="Агентство недвижимости">Агентство недвижимости</option>
+                                                            <option value="Частный риелтор">Частный риелтор</option>
+                                                            <option value="Наружная реклама">Наружная реклама</option>
+                                                            <option value="Банк партнер" selected>Банк партнер</option>
+                                                            <option value="Интернет">Интернет</option>
+                                                            <option value="Личный кабинет">Личный кабинет</option>
+                                                            <option value="РосБанк">РосБанк</option>
+                                                        }
+                                                        @if (Model.Source == "Интернет")
+                                                        {
+                                                            <option value="Агентство недвижимости">Агентство недвижимости</option>
+                                                            <option value="Частный риелтор">Частный риелтор</option>
+                                                            <option value="Наружная реклама">Наружная реклама</option>
+                                                            <option value="Банк партнер">Банк партнер</option>
+                                                            <option value="Интернет" selected>Интернет</option>
+                                                            <option value="Личный кабинет">Личный кабинет</option>
+                                                            <option value="РосБанк">РосБанк</option>
+                                                        }
+                                                        @if (Model.Source == "Личный кабинет")
+                                                        {
+                                                            <option value="Агентство недвижимости">Агентство недвижимости</option>
+                                                            <option value="Частный риелтор">Частный риелтор</option>
+                                                            <option value="Наружная реклама">Наружная реклама</option>
+                                                            <option value="Банк партнер">Банк партнер</option>
+                                                            <option value="Интернет">Интернет</option>
+                                                            <option value="Личный кабинет" selected>Личный кабинет</option>
+                                                            <option value="РосБанк">РосБанк</option>
+                                                        }
+                                                        @if (Model.Source == "РосБанк")
+                                                        {
+                                                            <option value="Агентство недвижимости">Агентство недвижимости</option>
+                                                            <option value="Частный риелтор">Частный риелтор</option>
+                                                            <option value="Наружная реклама">Наружная реклама</option>
+                                                            <option value="Банк партнер">Банк партнер</option>
+                                                            <option value="Интернет">Интернет</option>
+                                                            <option value="Личный кабинет">Личный кабинет</option>
+                                                            <option value="РосБанк" selected>РосБанк</option>
+                                                        }
+                                                    </select>
+                                                    @Html.HiddenFor(t => t.Source, new { @id = "Source" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Место работы</label>
+                                                    @Html.TextBoxFor(t => t.Work, new { @class = "form-control border-input" })
+                                                    @Html.ValidationMessageFor(t => t.Work)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" id="btnform" name="btnform" hidden></button>
+                                    </form>
                                 </div>
 
                                 <div id="stories">
@@ -134,3 +295,7 @@
         </div>
     </div>
 </div>
+<script>
+    $('#SourceHtml').on('change', function (e) { $('#Source').val($('#SourceHtml :selected').val()) });
+    $('#BirthdayHtml').on('change', function (e) { $('#Birthday').val($('#BirthdayHtml').val()) });
+</script>

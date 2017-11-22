@@ -1,5 +1,6 @@
 ﻿@model MobileCRM.Models.ViewModel
-
+@{Html.EnableClientValidation();}
+@{Html.EnableUnobtrusiveJavaScript();}
 @using (Ajax.BeginForm("Creditprofile", "Home", new AjaxOptions { UpdateTargetId = "profiles" }))
 {
     <div class="row">
@@ -35,8 +36,6 @@
             <div class="form-group">
                 <label>Отчество</label>
                 <input type="text" class="form-control border-input" value="@ViewBag.Credit.Patronymic" id="PatronymicHtml">
-                @Html.EditorFor(t => t.Credit.Surname, new { htmlAttributes = new { @class = "form-control border-input", @id = "Surname" } })
-                @Html.ValidationMessageFor(t => t.Credit.Surname)
             </div>
         </div>
     </div>
@@ -64,7 +63,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="form-group">
-                @Html.TextBoxFor(t => t.Credit.PhoneNumber, new { @class = "form-control border-input" })
+                @Html.TextBoxFor(t => t.Credit.PhoneNumber, new { @class = "form-control border-input"})
                 @Html.ValidationMessageFor(t => t.Credit.PhoneNumber)
             </div>
         </div>

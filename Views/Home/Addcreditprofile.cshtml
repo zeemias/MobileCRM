@@ -107,7 +107,7 @@
                                     <h4 class="title">Информация</h4>
                                 </div>
                                 <div class="content">
-                                    <form method="post" action="/Home/AddProfile">
+                                    <form method="post" action="/Home/Addcreditprofile">
                                         @Html.HiddenFor(t => t.Photo, new { @class = "form-control border-input", @id = "PhotoProfile" })
                                         @Html.ValidationMessageFor(t => t.Photo)
                                         <div class="row">
@@ -204,6 +204,7 @@
       </div>
     </div>
 <script>
+    $('#PhotoProfile').val("~/Content/img/avatar.png");
     $('#SourceHtml').on('change', function (e) { $('#Source').val($('#SourceHtml :selected').val()) });
     $('#BirthdayHtml').on('change', function (e) { $('#Birthday').val($('#BirthdayHtml').val()) });
 </script>

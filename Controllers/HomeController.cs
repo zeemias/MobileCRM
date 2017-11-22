@@ -126,19 +126,15 @@ namespace MobileCRM.Controllers
                 {
                     return RedirectToAction("Http404", "Error");
                 }
-                ViewModel viewModel = new ViewModel()
-                {
-                    Credit = db.Credits.Find(id),
-                    Comment = db.Comments.Where(t => t.CreditId == id).ToList(),
-                    Story = db.Stories.Where(t => t.CreditId == id).ToList()
-                };
-                ViewBag.Credit = viewModel.Credit;
-                ViewBag.Comments = viewModel.Comment;
-                ViewBag.Stories = viewModel.Story;
-                if (viewModel.Credit != null)
+                Credit credit = db.Credits.Find(id);
+                ViewBag.Id = credit.Id;
+                ViewBag.Credit = credit;
+                ViewBag.Comments = db.Comments.Where(t => t.CreditId == id).ToList();
+                ViewBag.Stories = db.Stories.Where(t => t.CreditId == id).ToList();
+                if (credit != null)
                 {
                     ViewBag.Role = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault().Role;
-                    return View(viewModel);
+                    return View(credit);
                 }
                 return RedirectToAction("Http404", "Error");
             }
@@ -146,13 +142,12 @@ namespace MobileCRM.Controllers
         }
 
         [HttpPost]
-        public ActionResult Creditprofile()
+        public ActionResult Creditprofile(Credit credit)
         {
             if (Request.IsAjaxRequest())
             {
                 User user = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault();
                 int idAdd = Convert.ToInt32(Request["CreditId"]);
-                int idEdit = Convert.ToInt32(Request["Id"]);
                 switch (Request["Type"])
                 {
                     case "comment":
@@ -165,7 +160,7 @@ namespace MobileCRM.Controllers
                         };
                         db.Comments.Add(comment);
                         db.SaveChanges();
-                        ViewBag.Credit = db.Credits.Find(idAdd);
+                        ViewBag.Id = idAdd;
                         ViewBag.Comments = db.Comments.Where(t => t.CreditId == idAdd).ToList();
                         return PartialView("AddComment");
                     case "story":
@@ -178,33 +173,21 @@ namespace MobileCRM.Controllers
                         };
                         db.Stories.Add(story);
                         db.SaveChanges();
-                        ViewBag.Credit = db.Credits.Find(idAdd);
+                        ViewBag.Id = idAdd;
                         ViewBag.Stories = db.Stories.Where(t => t.CreditId == idAdd).ToList();
                         return PartialView("AddStory");
-                    case "profile":
-                        Credit credit = new Credit()
-                        {
-                            Id = idEdit,
-                            Name = Request["Name"],
-                            Surname = Request["Surname"],
-                            Patronymic = Request["Patronymic"],
-                            Photo = Request["Photo"],
-                            Email = Request["Email"],
-                            Source = Request["Source"],
-                            Work = Request["Work"],
-                            UserLogin = User.Identity.Name,
-                            PhoneNumber = Request["PhoneNumber"],
-                            Birthday = Convert.ToDateTime(Request["Birthday"])
-                        };
-                        db.Entry(credit).State = EntityState.Modified;
-                        db.SaveChanges();
-                        ViewBag.Credit = db.Credits.Find(idEdit);
-                        return PartialView("EditProfile");
                     default:
                         return RedirectToAction("Http404", "Error");
                 }
             }
-            ViewBag.Role = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault().Role;
+            if(credit != null)
+            {
+                credit.UserLogin = User.Identity.Name;
+                db.Entry(credit).State = EntityState.Modified;
+                db.SaveChanges();
+                string path = "Creditprofile/" + credit.Id.ToString();
+                return RedirectToAction(path, "Home");
+            }
             return View();
         }
 
@@ -222,23 +205,6 @@ namespace MobileCRM.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 return View();
-            }
-            return RedirectToAction("Login", "Account");
-        }
-
-        public ActionResult AddProfile(Credit credit)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                credit.UserLogin = User.Identity.Name;
-                db.Credits.Add(credit);
-                db.SaveChanges();
-                int id = credit.Id;
-                User user = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault();
-                db.Stories.Add(new Story { Date = DateTime.Now, User = user.Surname + " " + user.Name, Action = "Добавлен новый клиент", CreditId = id });
-                db.SaveChanges();
-                string profile = "Creditprofile/" + id.ToString();
-                return RedirectToAction(profile, "Home");
             }
             return RedirectToAction("Login", "Account");
         }
@@ -261,53 +227,56 @@ namespace MobileCRM.Controllers
                     if (id == null)
                     {
                         User user = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault();
-                        ViewBag.User = user;
                         ViewBag.Role = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault().Role;
+                        return View(user);
                     }
                     else
                     {
                         return RedirectToAction("Http404", "Error");
                     }
-                    return View();
                 }
                 else
                 {
                     if (id == null)
                     {
                         User user = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault();
-                        ViewBag.User = user;
                         ViewBag.Role = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault().Role;
+                        return View(user);
                     }
                     else
                     {
-                        ViewBag.User = db.Users.Find(id);
-                        if (ViewBag.User == null)
+                        User user = db.Users.Find(id);
+                        if (user == null)
                         {
                             return RedirectToAction("Http404", "Error");
                         }
                         ViewBag.Role = db.Users.Where(t => t.Login == User.Identity.Name).FirstOrDefault().Role;
+                        return View(user);
                     }
-                    return View();
                 }
             }
             return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
-        public ActionResult Userprofile(int Id, string Photo, string Surname, string Name, string Patronymic, string Password)
+        public ActionResult Userprofile(User user)
         {
-            User user = db.Users.Find(Id);
-            user.Name = Name;
-            user.Surname = Surname;
-            user.Patronymic = Patronymic;
-            user.Photo = Photo;
-            if (Password != null)
+            string userPassword = db.Users.Find(user.Id).Password;
+            if (user.Password != null)
             {
-                Password = getMd5Hash(Password);
-                if(Password != user.Password)
+                string Password = getMd5Hash(user.Password);
+                if(userPassword != Password)
                 {
                     user.Password = Password;
                 }
+                else
+                {
+                    user.Password = userPassword;
+                }
+            }
+            else
+            {
+                user.Password = userPassword;
             }
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
